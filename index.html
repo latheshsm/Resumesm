@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>LATHESH S M — Minimal Portfolio</title>
+<title>LATHESH S M — Responsive Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -22,16 +22,18 @@
     display:flex;align-items:center;justify-content:center;padding:28px;overflow-x:hidden;
   }
 
-  /* center card */
+  /* stage/card */
   .stage{
     width:760px; max-width:96vw; border-radius:18px; padding:36px; position:relative;
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     border:1px solid rgba(255,255,255,0.06); box-shadow: 0 30px 80px rgba(2,6,23,0.6);
-    display:flex;flex-direction:column;align-items:center; gap:22px;
+    display:flex;flex-direction:column;align-items:center; gap:18px;
   }
 
-  /* top right menu */
-  .top-menu{position:absolute; right:18px; top:18px; display:flex; gap:10px; align-items:center}
+  /* fixed menu container (moved outside box, top-right) */
+  .fixed-menu{
+    position:fixed; top:18px; right:18px; display:flex; gap:10px; align-items:center; z-index:60;
+  }
   .menu-btn{
     background:transparent;border:1px solid rgba(255,255,255,0.04); padding:8px 12px;border-radius:10px;color:var(--fg);cursor:pointer;
     font-weight:700; font-family:Poppins; transition:transform .18s, box-shadow .18s, background .18s;
@@ -39,13 +41,22 @@
   .menu-btn:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(2,6,23,0.45); background: linear-gradient(90deg,var(--accent1), rgba(181,107,255,0.06));}
   .menu-btn[aria-pressed="true"]{background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#061022; box-shadow:0 20px 48px rgba(100,211,255,0.12);}
 
+  /* hamburger for small screens */
+  .hamburger{
+    display:none; width:46px;height:46px;border-radius:10px;border:1px solid rgba(255,255,255,0.06); background:rgba(255,255,255,0.01);
+    align-items:center; justify-content:center; cursor:pointer;
+  }
+  .hamburger .bar{ width:20px; height:2px; background:var(--fg); display:block; position:relative }
+  .hamburger .bar::before, .hamburger .bar::after{ content:''; position:absolute; left:0; right:0; height:2px; background:var(--fg); }
+  .hamburger .bar::before{ top:-6px } .hamburger .bar::after{ top:6px }
+
   /* portrait */
   .portrait{ position:relative; width:220px; height:220px; border-radius:34px; display:grid; place-items:center; overflow:visible; }
   .ring{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:240px; height:240px; border-radius:20px;
          filter:blur(22px); opacity:0.55; background: conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--accent3)); mix-blend-mode:screen;}
   .frame{ width:200px; height:200px; border-radius:28px; overflow:hidden; border:2px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
   .frame img{ width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.02); transition:transform .85s cubic-bezier(.2,.9,.2,1); 
-              /* color cycle animation */ animation: hueCycle 5s linear infinite; will-change: filter; }
+              animation: hueCycle 5s linear infinite; will-change: filter; }
   .portrait:hover .frame img{ transform:scale(1.08) rotate(-1.2deg); }
 
   @keyframes hueCycle { 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(360deg)} }
@@ -56,7 +67,7 @@
   .name{ font-family:Poppins; font-weight:800; font-size:26px; letter-spacing:0.2px; text-align:center }
   .sub{ color:var(--muted); font-weight:600; text-align:center; margin-top:6px }
 
-  /* action icons */
+  /* action icons (visible on desktop) */
   .actions{ display:flex; gap:14px; margin-top:6px }
   .icon-btn{ display:inline-grid; place-items:center; width:56px; height:56px; border-radius:12px; background: rgba(255,255,255,0.02);
              border:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:transform .18s, box-shadow .18s; position:relative; overflow:hidden }
@@ -64,20 +75,18 @@
   .icon{ width:22px; height:22px; display:block; color:var(--fg) }
   .icon-btn:focus{ outline:3px solid rgba(100,211,255,0.14) }
 
-  /* ripple effect */
   .ripple{ position:absolute; border-radius:50%; transform:scale(0); animation:ripple .6s linear; opacity:0.35; background: linear-gradient(90deg,var(--accent1),var(--accent2)); pointer-events:none; }
   @keyframes ripple{ to{ transform:scale(8); opacity:0 } }
 
-  /* content area (About/Skills) */
+  /* content area */
   .panel{ width:100%; max-width:680px; min-height:96px; border-radius:12px; padding:14px; background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
           border:1px solid rgba(255,255,255,0.04); color:var(--muted); transform-origin:top center; transition: transform .38s cubic-bezier(.2,.9,.2,1), opacity .28s; opacity:0; transform:translateY(-10px) scale(.995); display:none; }
   .panel.is-open{ display:block; opacity:1; transform:translateY(0) scale(1); }
-
   .panel h3{ margin:0 0 8px 0; color:var(--fg); font-family:Poppins; font-weight:700 }
   .skills-list{ display:flex; gap:10px; flex-wrap:wrap }
   .skill-pill{ padding:8px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); font-weight:700; color:var(--fg) }
 
-  /* download button */
+  /* download CTA */
   .download{ display:inline-flex; align-items:center; gap:10px; padding:10px 16px; border-radius:12px; background:linear-gradient(90deg,var(--accent1),var(--accent2));
              color:#061022; font-weight:800; border:none; cursor:pointer; font-family:Poppins; transition:transform .14s, box-shadow .14s; }
   .download:hover{ transform:translateY(-6px); box-shadow:0 28px 60px rgba(100,211,255,0.12) }
@@ -86,27 +95,37 @@
   .stage{ opacity:0; transform:translateY(8px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1) }
   .stage.visible{ opacity:1; transform:none }
 
-  /* bottom copyright outside card */
+  /* floating overlay for mobile menu */
+  .mobile-overlay{
+    position:fixed; right:14px; top:72px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.06);
+    padding:12px; border-radius:12px; box-shadow:0 16px 40px rgba(2,6,23,0.6); display:none; z-index:80;
+  }
+  .mobile-overlay.open{ display:flex; flex-direction:column; gap:10px; align-items:center }
+
+  /* fixed footer copyright (outside card) */
   .page-footer{ position:fixed; left:0; right:0; bottom:12px; display:flex; align-items:center; justify-content:center; pointer-events:none }
   .page-footer .text{ color:var(--muted); font-size:13px; pointer-events:auto; padding:6px 10px; border-radius:8px; background:rgba(0,0,0,0.12) }
 
-  /* responsive */
-  @media (max-width:520px){
-    .stage{ padding:24px; gap:16px }
-    .portrait{ width:160px; height:160px } .frame{ width:140px; height:140px }
-    .name{ font-size:20px }
-    .actions{ gap:10px }
+  /* responsive behavior */
+  @media (max-width:720px){
+    .stage{ width:92vw; padding:22px; gap:14px }
+    .actions{ display:none }              /* hide icons on small screens */
+    .fixed-menu{ gap:8px }
+    .menu-btn{ display:none }             /* hide normal menu button; show hamburger instead */
+    .hamburger{ display:flex }           /* show hamburger top-right */
+    .mobile-overlay{ right:12px; top:64px }
+  }
+
+  @media (min-width:721px){
+    .hamburger{ display:none }
+    .mobile-overlay{ display:none !important }
+    .fixed-menu{ display:flex }          /* show fixed menu on desktop */
   }
 </style>
 </head>
 <body>
 
 <main class="stage" id="stage">
-  <!-- top-right menu -->
-  <div class="top-menu" role="toolbar" aria-label="Menu">
-    <button class="menu-btn" id="btnAbout" aria-pressed="false">About</button>
-    <button class="menu-btn" id="btnSkills" aria-pressed="false">Skills</button>
-  </div>
 
   <!-- portrait -->
   <div class="portrait" aria-hidden="false">
@@ -122,155 +141,142 @@
     <div class="sub">Full-Stack Developer • React • Node.js • IoT</div>
   </div>
 
-  <!-- action icons -->
+  <!-- action icons (desktop only) -->
   <div class="actions" role="navigation" aria-label="Contact and links">
-    <!-- GitHub -->
     <button class="icon-btn" id="btnGit" aria-label="Open GitHub (opens new tab)">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke-width="0.4"/></svg>
     </button>
 
-    <!-- Email -->
     <button class="icon-btn" id="btnEmail" aria-label="Send email">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9"/><path d="M21 7.5L12 13 3 7.5"/></svg>
     </button>
 
-    <!-- WhatsApp -->
     <button class="icon-btn" id="btnWhats" aria-label="Open WhatsApp chat">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5a8.5 8.5 0 1 1-1.6-4.9L21 21l-4.9-1.6A8.5 8.5 0 0 1 21 12.5z"/><path d="M17.5 15.5c-.2-.1-1.2-.6-1.4-.6s-.4 0-.6.6-.7.6-1 .6a5 5 0 0 1-1.8-.6c-.8-.6-1.3-1.7-1.4-1.8-.1-.2 0-.5 0-.7s-.2-.4-.5-.7c-.3-.4-.3-.7 0-.9s.6-.3.9-.3.6 0 .8.2.2.3.4.3.6-.1 1-.1c.5 0 .9.1 1.3.3.5.3.8.7 1 1.1.2.4.2.8 0 1.1-.1.2-.3.4-.5.4z"/></svg>
     </button>
 
-    <!-- LinkedIn -->
     <button class="icon-btn" id="btnLinked" aria-label="Open LinkedIn (opens new tab)">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2"/></svg>
     </button>
   </div>
 
-  <!-- About / Skills Panel (in-place) -->
+  <!-- About / Skills panel -->
   <section id="panel" class="panel" aria-live="polite"></section>
 
-  <!-- Download CTA -->
+  <!-- download CTA -->
   <div style="margin-top:6px; display:flex; flex-direction:column; align-items:center; gap:8px;">
     <button class="download" id="downloadBtn" aria-label="Download resume">⬇ Download Resume</button>
   </div>
 </main>
 
-<!-- fixed copyright outside the card -->
+<!-- fixed menu (desktop) and hamburger (mobile) at top-right outside the card -->
+<div class="fixed-menu" id="fixedMenu" aria-hidden="false">
+  <button class="menu-btn" id="aboutDesktop">About</button>
+  <button class="menu-btn" id="skillsDesktop">Skills</button>
+
+  <!-- hamburger (only visible on small screens) -->
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Open menu">
+    <span class="bar" aria-hidden="true"></span>
+  </button>
+</div>
+
+<!-- mobile overlay that shows icons + menu items when hamburger toggled -->
+<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true">
+  <div style="display:flex; gap:10px;">
+    <button class="icon-btn" id="mGit" aria-label="GitHub (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke-width="0.4"/></svg></button>
+    <button class="icon-btn" id="mEmail" aria-label="Email (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9"/><path d="M21 7.5L12 13 3 7.5"/></svg></button>
+    <button class="icon-btn" id="mWhats" aria-label="WhatsApp (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5a8.5 8.5 0 1 1-1.6-4.9L21 21l-4.9-1.6A8.5 8.5 0 0 1 21 12.5z"/><path d="M17.5 15.5c-.2-.1-1.2-.6-1.4-.6s-.4 0-.6.6-.7.6-1 .6a5 5 0 0 1-1.8-.6c-.8-.6-1.3-1.7-1.4-1.8-.1-.2 0-.5 0-.7s-.2-.4-.5-.7c-.3-.4-.3-.7 0-.9s.6-.3.9-.3.6 0 .8.2.2.3.4.3.6-.1 1-.1c.5 0 .9.1 1.3.3.5.3.8.7 1 1.1.2.4.2.8 0 1.1-.1.2-.3.4-.5.4z"/></svg></button>
+    <button class="icon-btn" id="mLinked" aria-label="LinkedIn (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2"/></svg></button>
+  </div>
+
+  <div style="display:flex; gap:8px; margin-top:8px;">
+    <button class="menu-btn" id="mAbout">About</button>
+    <button class="menu-btn" id="mSkills">Skills</button>
+  </div>
+</div>
+
+<!-- fixed footer copyright (outside card) -->
 <div class="page-footer" aria-hidden="false">
   <div class="text">© <span id="year"></span> LATHESH S M</div>
 </div>
 
 <script>
-  // configuration: replace placeholders with real values
-  const GITHUB_URL = 'https://github.com/latheshsm';          // put your GitHub URL
-  const EMAIL_ADDR = 'latheshsm@email.com';                  // put your email
-  const WHATSAPP_NUMBER = '91XXXXXXXXX';                     // use country code then number (e.g. 919876543210)
-  const LINKEDIN_URL = 'https://www.linkedin.com/in/yourprofile'; // put your LinkedIn URL
+  // CONFIG - replace these with your real details
+  const GITHUB_URL = 'https://github.com/latheshsm';
+  const EMAIL_ADDR = 'latheshsm@email.com';
+  const WHATSAPP_NUMBER = '91XXXXXXXXX';
+  const LINKEDIN_URL = 'https://www.linkedin.com/in/yourprofile';
 
   // set year
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // small helper open
-  function safeOpen(url){
-    window.open(url, '_blank', 'noopener');
+  // utility
+  function openSafe(url){ window.open(url, '_blank', 'noopener'); }
+
+  // desktop fixed menu buttons
+  const aboutDesktop = document.getElementById('aboutDesktop');
+  const skillsDesktop = document.getElementById('skillsDesktop');
+
+  // panel where About/Skills show
+  const panel = document.getElementById('panel');
+
+  function openPanel(type){
+    // update pressed states for desktop buttons (if exist)
+    if(aboutDesktop) aboutDesktop.setAttribute('aria-pressed', type === 'about' ? 'true' : 'false');
+    if(skillsDesktop) skillsDesktop.setAttribute('aria-pressed', type === 'skills' ? 'true' : 'false');
+
+    // fill content
+    if(type === 'about'){
+      panel.innerHTML = '<h3>About</h3><div>I build delightful, accessible web apps with a focus on performance and clean architecture. I enjoy solving problems and shipping features end-to-end.</div>';
+    } else if(type === 'skills'){
+      panel.innerHTML = '<h3>Skills</h3><div class=\"skills-list\"><span class=\"skill-pill\">JavaScript</span><span class=\"skill-pill\">React</span><span class=\"skill-pill\">Node.js</span><span class=\"skill-pill\">MongoDB</span><span class=\"skill-pill\">HTML & CSS</span></div>';
+    } else {
+      panel.innerHTML = '';
+    }
+
+    if(type) panel.classList.add('is-open'); else panel.classList.remove('is-open');
   }
 
-  // icon buttons wiring
+  aboutDesktop && aboutDesktop.addEventListener('click', ()=> {
+    const cur = aboutDesktop.getAttribute('aria-pressed') === 'true';
+    openPanel(cur ? null : 'about');
+  });
+  skillsDesktop && skillsDesktop.addEventListener('click', ()=> {
+    const cur = skillsDesktop.getAttribute('aria-pressed') === 'true';
+    openPanel(cur ? null : 'skills');
+  });
+
+  // icon buttons (desktop)
   const btnGit = document.getElementById('btnGit');
   const btnEmail = document.getElementById('btnEmail');
   const btnWhats = document.getElementById('btnWhats');
   const btnLinked = document.getElementById('btnLinked');
 
-  btnGit.addEventListener('click', (e) => {
-    createRipple(e, btnGit);
-    safeOpen(GITHUB_URL);
-  });
-  btnEmail.addEventListener('click', (e) => {
-    createRipple(e, btnEmail);
-    window.location.href = `mailto:${EMAIL_ADDR}`;
-  });
-  btnWhats.addEventListener('click', (e) => {
-    createRipple(e, btnWhats);
-    // wa.me requires country code and digits only
-    const cleaned = WHATSAPP_NUMBER.replace(/\D/g,'');
-    if(!cleaned) { alert('WhatsApp number not configured'); return; }
-    safeOpen(`https://wa.me/${cleaned}`);
-  });
-  btnLinked.addEventListener('click', (e) => {
-    createRipple(e, btnLinked);
-    safeOpen(LINKEDIN_URL);
-  });
-
-  // ripple helper
   function createRipple(e, el){
     const r = document.createElement('span');
     r.className = 'ripple';
     const rect = el.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height)*1.2;
+    const size = Math.max(rect.width, rect.height) * 1.2;
     r.style.width = r.style.height = size + 'px';
     r.style.left = (e.clientX - rect.left - size/2) + 'px';
-    r.style.top  = (e.clientY - rect.top - size/2) + 'px';
+    r.style.top = (e.clientY - rect.top - size/2) + 'px';
     el.appendChild(r);
     setTimeout(()=> r.remove(), 700);
     el.focus();
   }
 
-  // keyboard activation for accessibility
-  document.querySelectorAll('.icon-btn, .menu-btn, .download').forEach(btn=>{
-    btn.addEventListener('keydown', (ev)=>{ if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); btn.click(); }});
+  // wire desktop icons
+  btnGit && btnGit.addEventListener('click', (e)=> { createRipple(e, btnGit); openSafe(GITHUB_URL); });
+  btnEmail && btnEmail.addEventListener('click', (e)=> { createRipple(e, btnEmail); window.location.href = `mailto:${EMAIL_ADDR}`; });
+  btnWhats && btnWhats.addEventListener('click', (e)=> { createRipple(e, btnWhats); const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? openSafe(`https://wa.me/${cleaned}`) : alert('WhatsApp not configured'); });
+  btnLinked && btnLinked.addEventListener('click', (e)=> { createRipple(e, btnLinked); openSafe(LINKEDIN_URL); });
+
+  // keyboard activation
+  document.querySelectorAll('.icon-btn, .menu-btn, .hamburger, .download').forEach(el=>{
+    el.addEventListener('keydown', (ev)=> { if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); el.click(); }});
   });
 
-  // panel content toggles (About & Skills)
-  const panel = document.getElementById('panel');
-  const btnAbout = document.getElementById('btnAbout');
-  const btnSkills = document.getElementById('btnSkills');
-
-  function openPanel(type){
-    // set pressed states
-    btnAbout.setAttribute('aria-pressed', type === 'about' ? 'true' : 'false');
-    btnSkills.setAttribute('aria-pressed', type === 'skills' ? 'true' : 'false');
-
-    // content
-    if(type === 'about'){
-      panel.innerHTML = `
-        <h3>About</h3>
-        <div>I build delightful, accessible web apps with a focus on performance and clean architecture. I enjoy solving problems, designing intuitive UIs, and shipping features end-to-end. Open to internships & collaborations.</div>
-      `;
-    } else if(type === 'skills'){
-      panel.innerHTML = `
-        <h3>Skills</h3>
-        <div class="skills-list">
-          <span class="skill-pill">JavaScript</span>
-          <span class="skill-pill">React</span>
-          <span class="skill-pill">Node.js</span>
-          <span class="skill-pill">Express</span>
-          <span class="skill-pill">MongoDB</span>
-          <span class="skill-pill">HTML & CSS</span>
-          <span class="skill-pill">REST APIs</span>
-        </div>
-      `;
-    } else {
-      panel.innerHTML = '';
-    }
-
-    // show/hide with animation
-    if(type){
-      panel.classList.add('is-open');
-    } else {
-      panel.classList.remove('is-open');
-    }
-  }
-
-  // toggle buttons
-  btnAbout.addEventListener('click', ()=> {
-    const currently = btnAbout.getAttribute('aria-pressed') === 'true';
-    openPanel(currently ? null : 'about');
-  });
-  btnSkills.addEventListener('click', ()=> {
-    const currently = btnSkills.getAttribute('aria-pressed') === 'true';
-    openPanel(currently ? null : 'skills');
-  });
-
-  // Download button (placeholder): downloads a simple text file; replace with PDF generation if you want
+  // download button (placeholder)
   document.getElementById('downloadBtn').addEventListener('click', (e)=>{
     e.preventDefault();
     const lines = [
@@ -288,18 +294,34 @@
     URL.revokeObjectURL(url);
   });
 
-  // entrance animation
-  window.addEventListener('load', ()=> {
-    document.getElementById('stage').classList.add('visible');
+  // mobile hamburger behavior
+  const hamburger = document.getElementById('hamburger');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  let overlayOpen = false;
+
+  hamburger && hamburger.addEventListener('click', (e)=>{
+    overlayOpen = !overlayOpen;
+    hamburger.setAttribute('aria-expanded', overlayOpen ? 'true' : 'false');
+    mobileOverlay.classList.toggle('open', overlayOpen);
   });
 
-  // optional: allow clicking profile to toggle Skills quick view
+  // wire mobile overlay buttons (same actions)
+  document.getElementById('mGit').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); openSafe(GITHUB_URL); });
+  document.getElementById('mEmail').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); window.location.href = `mailto:${EMAIL_ADDR}`; });
+  document.getElementById('mWhats').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? openSafe(`https://wa.me/${cleaned}`) : alert('WhatsApp not configured'); });
+  document.getElementById('mLinked').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); openSafe(LINKEDIN_URL); });
+
+  document.getElementById('mAbout').addEventListener('click', ()=> { openPanel('about'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
+  document.getElementById('mSkills').addEventListener('click', ()=> { openPanel('skills'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
+
+  // small UX: click photo to open about (desktop/mobile)
   document.querySelector('.frame').addEventListener('click', ()=> {
-    // quick pulse animation and then open about if closed
-    document.querySelector('.frame img').animate([{transform:'scale(1.02)'},{transform:'scale(1.06)'},{transform:'scale(1.02)'}], {duration:420});
-    if(panel.classList.contains('is-open')) return;
+    if(panel.classList.contains('is-open')) { openPanel(null); return; }
     openPanel('about');
   });
+
+  // entrance animation
+  window.addEventListener('load', ()=> { document.getElementById('stage').classList.add('visible'); });
 
 </script>
 </body>
