@@ -1,202 +1,231 @@
-  <!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LATHESH S M — Minimal Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg1:#071029; --bg2:#0b1228; --accent1:#64d3ff; --accent2:#b56bff; --fg:#e8f1ff; --muted:#9fb0d0; --glass:rgba(255,255,255,0.04);
-      --highlight: #00ffa3;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:var(--fg);-webkit-font-smoothing:antialiased}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>LATHESH S M — Portfolio / Resume</title>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<style>
+  :root{
+    --bg:#071017; --card:#0f1720; --accent:#00d4a6; --muted:#9aa6b2;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:
+    radial-gradient(900px 400px at 10% 10%, rgba(0,212,166,0.05), transparent),
+    linear-gradient(180deg,#061014 0%, #08111a 100%); -webkit-font-smoothing:antialiased}
+  .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+  .card{
+    width:100%;max-width:960px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:18px;padding:28px;box-shadow: 0 12px 36px rgba(2,8,23,0.6);backdrop-filter: blur(8px);
+    display:grid;grid-template-columns:220px 1fr;gap:26px;align-items:start;position:relative;overflow:hidden;
+    transform:translateY(18px);animation:enter .65s cubic-bezier(.22,.9,.32,1) forwards;
+  }
+  @keyframes enter { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
 
-    /* animated radial gradient background */
-    body{
-      background: radial-gradient(600px 400px at 10% 10%, rgba(100,211,255,0.08), transparent 20%),
-                  radial-gradient(600px 400px at 90% 90%, rgba(181,107,255,0.07), transparent 18%),
-                  linear-gradient(180deg,var(--bg1),var(--bg2));
-      display:flex;align-items:center;justify-content:center;padding:40px;
-      overflow:hidden;
-      -webkit-font-smoothing:antialiased;
-    }
+  /* left column */
+  .left{
+    display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center;padding-top:6px;
+  }
+  .avatar{
+    width:200px;height:200px;border-radius:22px;overflow:hidden;border:4px solid rgba(255,255,255,0.04);
+    position:relative;background:linear-gradient(180deg,#06141a,#092026);
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .pulse{
+    position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    box-shadow:0 0 60px 10px rgba(0,212,166,0.06);opacity:0;animation:glow 2.8s infinite;
+  }
+  @keyframes glow{0%{opacity:0}40%{opacity:1}100%{opacity:0}}
+  .skill-bubble{
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  }
+  .chip{background:rgba(255,255,255,0.02);padding:8px 10px;border-radius:999px;font-size:13px;border:1px solid rgba(255,255,255,0.02)}
+  .left small{color:var(--muted);display:block;margin-top:6px}
 
-    /* moving mesh overlay */
-    .mesh{
-      position:fixed;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:0.14;background-image:radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02), transparent 10%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02), transparent 8%);
-      animation:meshMove 18s linear infinite;
-    }
-    @keyframes meshMove{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(60px,-30px,0)}100%{transform:translate3d(0,0,0)}}
+  /* right column */
+  h1{margin:0;font-size:26px;letter-spacing:-0.3px}
+  .role{color:var(--accent);font-weight:700;margin-top:6px}
+  p.lead{color:var(--muted);margin:12px 0 18px;line-height:1.45}
+  .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .meta .m{background:var(--glass);padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);font-size:13px}
 
-    /* Center card — minimal */
-    .stage{width:760px;max-width:94vw;border-radius:18px;padding:44px 36px;display:flex;flex-direction:column;align-items:center;gap:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);box-shadow:0 30px 80px rgba(2,6,23,0.6)}
+  .grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;
+  }
 
-    /* Unique profile: layered clipped shapes + ring */
-    .portrait{
-      position:relative;width:220px;height:220px;border-radius:34px;display:grid;place-items:center;overflow:visible;transform:translateY(-12px);
-    }
-    .ring{position:absolute;inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);width:240px;height:240px;border-radius:20px;filter:blur(22px);opacity:0.55;background:conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--highlight));mix-blend-mode:screen}
-    .portrait .frame{width:200px;height:200px;border-radius:28px;overflow:hidden;position:relative;border:2px solid rgba(255,255,255,0.06);backdrop-filter:blur(6px)}
-    .portrait img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform .9s cubic-bezier(.2,.9,.2,1)}
-    .portrait:hover img{transform:scale(1.08) rotate(-1.5deg)}
+  .card-block{
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.02);
+  }
+  .card-block h3{margin:0;font-size:14px}
+  .card-block p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.4}
 
-    /* small badge with initials */
-    .initials{position:absolute;right:-6px;bottom:-6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:8px 10px;border-radius:12px;font-weight:800;color:#061022;font-family:Poppins;box-shadow:0 6px 18px rgba(0,0,0,0.45)}
+  .actions{display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
+  .btn{
+    padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03);display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+    color:#e6eef6;font-weight:700;transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:linear-gradient(90deg,var(--accent),#00bca0);color:#012;box-shadow:0 10px 30px rgba(0,212,166,0.09)}
+  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04)}
 
-    /* Name and micro info */
-    .name{font-family:Poppins;font-weight:800;font-size:28px;letter-spacing:0.3px}
-    .sub{color:var(--muted);font-weight:600}
+  .icons{display:flex;gap:10px;align-items:center;margin-left:auto}
+  .icon{
+    width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:var(--glass);
+    border:1px solid rgba(255,255,255,0.02);transition:transform .15s cubic-bezier(.2,.9,.3,1), box-shadow .15s ease, background .15s ease;
+    cursor:pointer;font-weight:700;color:var(--muted);font-size:14px;
+  }
+  .icon:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 22px 48px rgba(2,8,23,0.6);color:var(--accent)}
+  .icon:active{transform:translateY(-4px)}
+  .footer{grid-column:1/-1;margin-top:18px;border-top:1px solid rgba(255,255,255,0.02);padding-top:12px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:13px}
+  .copyright{opacity:0.9}
+  .download-note{font-size:13px;color:var(--muted)}
 
-    /* Action icons row */
-    .actions{display:flex;gap:14px;align-items:center}
-    .icon-btn{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:12px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s;position:relative;overflow:hidden}
-    .icon-btn:active{transform:translateY(2px) scale(.995)}
-    .icon-btn:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.45)}
-    .icon{font-size:20px;display:block}
-    .icon-label{font-size:11px;color:var(--muted);margin-top:6px}
+  /* animated background shapes */
+  .shape{
+    position:absolute;border-radius:50%;filter:blur(80px);opacity:0.12;pointer-events:none;
+  }
+  .shape.a{width:420px;height:420px;right:-120px;top:-80px;background:linear-gradient(180deg,#00d4a6,#00a1ff)}
+  .shape.b{width:320px;height:320px;left:-140px;bottom:-80px;background:linear-gradient(180deg,#7c5cff,#ff6b9a)}
 
-    /* highlight shimmer on hover & press */
-    .icon-btn::after{content:'';position:absolute;inset:0;border-radius:10px;box-shadow:0 0 0 0 rgba(0,0,0,0);transition:box-shadow .18s ease}
-    .icon-btn:hover::after{box-shadow:0 12px 40px rgba(100,211,255,0.06)}
+  /* responsive */
+  @media (max-width:820px){
+    .card{grid-template-columns:1fr;row-gap:18px;padding:20px}
+    .avatar{width:160px;height:160px}
+    .icons{margin-left:0}
+    .grid{grid-template-columns:1fr}
+  }
 
-    /* glowing outline when focused */
-    .icon-btn:focus{outline:3px solid rgba(100,211,255,0.14)}
-
-    /* download CTA pinned bottom inside stage */
-    .cta-wrap{width:100%;display:flex;justify-content:center}
-    .download{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061022;font-weight:800;border:none;cursor:pointer;font-family:Poppins;box-shadow:0 12px 30px rgba(100,211,255,0.12);transition:transform .14s ease,box-shadow .14s}
-    .download:active{transform:translateY(2px)}
-    .download:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(100,211,255,0.18)}
-
-    .copyright{font-size:13px;color:var(--muted);margin-top:6px}
-
-    /* subtle floating particles */
-    .particle{position:absolute;border-radius:999px;opacity:0.12;filter:blur(8px)}
-    .p1{width:220px;height:220px;left:-80px;top:8vh;background:radial-gradient(circle at 30% 30%, var(--accent1), transparent)}
-    .p2{width:160px;height:160px;right:-60px;bottom:10vh;background:radial-gradient(circle at 70% 60%, var(--accent2), transparent)}
-
-    /* responsive */
-    @media (max-width:520px){.stage{padding:28px 18px}.portrait{width:160px;height:160px}.ring{width:180px;height:180px}.name{font-size:20px}}
-
-    /* touch feedback: ripple on icon press */
-    .ripple{position:absolute;border-radius:50%;transform:scale(0);animation:ripple .6s linear;opacity:0.35;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
-    @keyframes ripple{to{transform:scale(8);opacity:0}}
-
-    /* subtle entrance */
-    .stage{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.9,.2,1)}
-    .stage.is-visible{opacity:1;transform:none}
-  </style>
+  /* small helper */
+  code{background:rgba(255,255,255,0.02);padding:3px 6px;border-radius:6px;font-size:13px}
+</style>
 </head>
 <body>
-  <div class="mesh" aria-hidden="true"></div>
-  <div class="particle p1" aria-hidden="true"></div>
-  <div class="particle p2" aria-hidden="true"></div>
+  <div class="wrap">
+    <main class="card" role="main" aria-label="Portfolio card">
+      <div class="shape a" aria-hidden="true"></div>
+      <div class="shape b" aria-hidden="true"></div>
 
-  <main class="stage" role="main" aria-labelledby="profile-name">
-    <div class="portrait" aria-hidden="false">
-      <div class="ring" aria-hidden="true"></div>
-      <div class="frame" tabindex="0" role="img" aria-label="Profile photo">
-        <img id="mainPhoto" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=500&auto=format&fit=crop" alt="Profile photo of Lathesh"/>
-      </div>
-      <div class="initials">LS</div>
-    </div>
+      <aside class="left" aria-hidden="false">
+        <div class="avatar" title="Profile photo">
+          <!-- Replace src with your image filename (profile.jpg) placed in same folder -->
+          <img src="profile.jpg" alt="LATHESH S M profile photo"
+               onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27100%25%27 height=%27100%25%27><rect width=%27100%25%27 height=%27100%25%27 fill=%27%23091a20%27/><text x=%2750%25%27 y=%2755%25%27 fill=%27%23fff%27 font-family=%27Arial%27 font-size=%2740%27 text-anchor=%27middle%27 alignment-baseline=%27middle%27>LS</text></svg>'">
+          <div class="pulse" aria-hidden="true"></div>
+        </div>
 
-    <div style="text-align:center">
-      <div id="profile-name" class="name">LATHESH S M</div>
-      <div class="sub">Full-Stack Developer • React • Node.js • IoT</div>
-    </div>
+        <div>
+          <strong style="font-size:16px">LATHESH S M</strong>
+          <small style="display:block;color:var(--muted);margin-top:6px">Creative Web Developer — India</small>
+        </div>
 
-    <div class="actions" role="navigation" aria-label="Contact and links">
-      <button class="icon-btn" data-hint="Email" id="btnEmail" aria-label="Email">
-        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 7.5L12 13 3 7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+        <div class="skill-bubble" aria-hidden="true" style="margin-top:10px">
+          <span class="chip">HTML</span>
+          <span class="chip">CSS</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">React</span>
+          <span class="chip">UI</span>
+        </div>
 
-      <button class="icon-btn" data-hint="Phone" id="btnPhone" aria-label="Phone">
-        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 5.18 2 2 0 0 1 5 3h3.09a1 1 0 0 1 1 .75c.12.66.34 1.3.64 1.9a1 1 0 0 1-.23 1.05L8.91 8.91a16 16 0 0 0 6.18 6.18l1.21-1.21a1 1 0 0 1 1.05-.23c.6.3 1.24.52 1.9.64a1 1 0 0 1 .75 1V16.92z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+        <div style="margin-top:6px"><small class="meta-note" style="color:var(--muted)">Tap icons to visit • Hover highlights</small></div>
+      </aside>
 
-      <button class="icon-btn" data-hint="GitHub" id="btnGit" aria-label="GitHub" onclick="openLink('https://github.com/latheshsm')">
-        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke="currentColor" stroke-width="0.4"/></svg>
-      </button>
+      <section>
+        <h1>LATHESH S M</h1>
+        <div class="role">Frontend Web Developer • UI & Interaction</div>
 
-      <button class="icon-btn" data-hint="Portfolio" id="btnWeb" aria-label="Portfolio" onclick="openLink('https://portfolio.example.com')">
-        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
+        <p class="lead">I design and build interactive, accessible, performance-minded front-end experiences. This single-file portfolio contains everything needed: place <code>profile.jpg</code> and <code>resume.pdf</code> in the same folder and deploy.</p>
 
-    <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:8px">
-      <div class="cta-wrap">
-        <a id="downloadBtn" class="download" href="#" download="Lathesh_SM_Resume.pdf" role="button" aria-label="Download Resume">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="transform:translateY(1px)"><path d="M12 3v12" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 11l4 4 4-4" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Download Resume
-        </a>
-      </div>
-      <div class="copyright">© <span id="year"></span> LATHESH S M</div>
-    </div>
-  </main>
+        <div class="meta" aria-hidden="true">
+          <div class="m">5+ yrs experience</div>
+          <div class="m">Available for freelance</div>
+          <div class="m">Open to remote</div>
+        </div>
 
-  <script>
-    // reveal animation
-    window.addEventListener('load', () => document.querySelector('.stage').classList.add('is-visible'));
+        <div class="actions" style="width:100%;margin-top:16px">
+          <a class="btn btn-primary" id="downloadBtn" href="resume.pdf" download>
+            ⬇️ Download Resume
+          </a>
 
-    // set year
-    document.getElementById('year').textContent = new Date().getFullYear();
+          <a class="btn btn-ghost" href="#contact" id="contactBtn">
+            💬 Contact
+          </a>
 
-    // simple open link helper
-    function openLink(url){ window.open(url, '_blank', 'noopener'); }
+          <div class="icons" role="toolbar" aria-label="Social links">
+            <div class="icon" title="GitHub" onclick="openLink('https://github.com/yourusername')">GH</div>
+            <div class="icon" title="LinkedIn" onclick="openLink('https://linkedin.com/in/yourusername')">in</div>
+            <div class="icon" title="Portfolio" onclick="openLink('https://your-site.example')">🔗</div>
+          </div>
+        </div>
 
-    // icon ripple, hover highlight and keyboard activation
-    document.querySelectorAll('.icon-btn').forEach(btn=>{
-      btn.addEventListener('click', (e)=>{
-        // ripple
-        const r = document.createElement('span');
-        r.className = 'ripple';
-        const rect = btn.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height) * 1.2;
-        r.style.width = r.style.height = size + 'px';
-        r.style.left = (e.clientX - rect.left - size/2) + 'px';
-        r.style.top = (e.clientY - rect.top - size/2) + 'px';
-        btn.appendChild(r);
-        setTimeout(()=> r.remove(), 700);
+        <div class="grid" style="margin-top:14px">
+          <div class="card-block">
+            <h3>About</h3>
+            <p>Frontend developer focusing on clear UX, micro-interactions, and performant code. I translate designs into production-ready interfaces and bring motion to UI in meaningful ways.</p>
+          </div>
 
-        // focus for keyboard/screen reader users
-        btn.focus();
-      });
+          <div class="card-block">
+            <h3>Skills</h3>
+            <p>HTML, CSS (Flexbox/Grid, Animations), JavaScript (ES6+), React, Responsive Design, Accessibility, Performance Optimization.</p>
+          </div>
 
-      btn.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
+          <div class="card-block">
+            <h3>Experience</h3>
+            <p>Built multiple production websites and dashboards. Experienced in component-driven development and testing.</p>
+          </div>
 
-      btn.addEventListener('mouseenter', ()=> btn.style.boxShadow = '0 20px 40px rgba(100,211,255,0.12)');
-      btn.addEventListener('mouseleave', ()=> btn.style.boxShadow = '');
+          <div class="card-block">
+            <h3>Education</h3>
+            <p>Bachelor's degree in Computer Science (or your degree) — focused on software & web technologies.</p>
+          </div>
+        </div>
+
+        <div id="contact" style="margin-top:16px;color:var(--muted);font-size:14px">
+          <strong>Email:</strong> <a href="mailto:your-email@example.com" style="color:var(--accent);text-decoration:none">your-email@example.com</a> • <strong>Location:</strong> India
+        </div>
+
+        <div class="footer" aria-hidden="true">
+          <div class="copyright">© <span id="year"></span> LATHESH S M</div>
+          <div class="download-note">Icons highlight on hover • Tap download to get resume</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script>
+  // small helper functions & UX checks
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function openLink(url){
+    try{ window.open(url, '_blank') }catch(e){ location.href = url }
+  }
+
+  // If resume.pdf missing, prevent broken download and inform user
+  document.getElementById('downloadBtn').addEventListener('click', function(e){
+    // attempt to HEAD the file; if not available, stop and notify
+    fetch('resume.pdf', {method:'HEAD'}).then(r=>{
+      if(!r.ok){
+        e.preventDefault();
+        alert('resume.pdf not found. Add resume.pdf next to index.html before deploying.');
+      }
+    }).catch(()=>{ /* network error — allow default behavior */ });
+  });
+
+  // small keyboard accessibility for icon buttons
+  document.querySelectorAll('.icon').forEach(function(el){
+    el.setAttribute('tabindex','0');
+    el.addEventListener('keypress', function(ev){
+      if(ev.key === 'Enter' || ev.key === ' ') el.click();
     });
+  });
 
-    // Download button demo: creates a simple text file (placeholder).
-    document.getElementById('downloadBtn').addEventListener('click', async (e)=>{
-      e.preventDefault();
-      // Basic resume content — replace with real PDF generation if you want
-      const name = 'LATHESH S M';
-      const email = 'latheshsm@email.com';
-      const phone = '+91-9XXXXXXXXX';
-      const text = `${name}\nFull-Stack Developer\n${email}\n${phone}\n\nExperience:\n- Frontend Developer Intern — XYZ Labs\n- Smart Dustbin (IoT) project\n\nProjects:\n- Weatherly (PWA)\n- TaskFlow (Kanban)\n\nSkills:\nJavaScript, React, Node.js, MongoDB, HTML, CSS\n`;
-      const blob = new Blob([text], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Lathesh_SM_Resume.txt'; // placeholder; I can switch to PDF export if you want
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    });
-
-    // Click on photo - hint for how to replace (you can replace src in HTML or request upload feature)
-    document.getElementById('mainPhoto').addEventListener('click', ()=> {
-      // lightweight UX hint for the user
-      alert('To change the profile image: edit the <img id=\"mainPhoto\"> src in the HTML or ask me to add an upload control.');
-    });
-  </script>
+  // subtle entrance motion for blocks
+  document.querySelectorAll('.card-block').forEach((b,i)=>{
+    b.style.opacity=0; b.style.transform='translateY(8px)';
+    setTimeout(()=>{ b.style.transition='all .45s cubic-bezier(.2,.9,.3,1)'; b.style.opacity=1; b.style.transform='none' }, 220 + i*80);
+  });
+</script>
 </body>
-          </html>
+  </html>
