@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -12,176 +13,190 @@
       --highlight: #00ffa3;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:var(--fg);-webkit-font-smoothing:antialiased}/* animated radial gradient background */
-body{
-  background: radial-gradient(600px 400px at 10% 10%, rgba(100,211,255,0.08), transparent 20%),
-              radial-gradient(600px 400px at 90% 90%, rgba(181,107,255,0.07), transparent 18%),
-              linear-gradient(180deg,var(--bg1),var(--bg2));
-  display:flex;align-items:center;justify-content:center;padding:40px;
-  overflow:hidden;
-}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:var(--fg);-webkit-font-smoothing:antialiased}
 
-/* moving mesh overlay */
-.mesh{
-  position:fixed;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:0.14;background-image:radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02), transparent 10%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02), transparent 8%);
-  animation:meshMove 18s linear infinite;
-}
-@keyframes meshMove{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(60px,-30px,0)}100%{transform:translate3d(0,0,0)}}
+    /* animated radial gradient background */
+    body{
+      background: radial-gradient(600px 400px at 10% 10%, rgba(100,211,255,0.08), transparent 20%),
+                  radial-gradient(600px 400px at 90% 90%, rgba(181,107,255,0.07), transparent 18%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      display:flex;align-items:center;justify-content:center;padding:40px;
+      overflow:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
 
-/* Center card — minimal */
-.stage{width:760px;max-width:94vw;border-radius:18px;padding:44px 36px;display:flex;flex-direction:column;align-items:center;gap:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);box-shadow:0 30px 80px rgba(2,6,23,0.6)}
+    /* moving mesh overlay */
+    .mesh{
+      position:fixed;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:0.14;background-image:radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02), transparent 10%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02), transparent 8%);
+      animation:meshMove 18s linear infinite;
+    }
+    @keyframes meshMove{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(60px,-30px,0)}100%{transform:translate3d(0,0,0)}}
 
-/* Unique profile: layered clipped shapes + ring */
-.portrait{
-  position:relative;width:220px;height:220px;border-radius:34px;display:grid;place-items:center;overflow:visible;transform:translateY(-12px);
-}
-.ring{position:absolute;inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);width:240px;height:240px;border-radius:20px;filter:blur(22px);opacity:0.55;background:conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--highlight));mix-blend-mode:screen}
-.portrait .frame{width:200px;height:200px;border-radius:28px;overflow:hidden;position:relative;border:2px solid rgba(255,255,255,0.06);backdrop-filter:blur(6px)}
-.portrait img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform .9s cubic-bezier(.2,.9,.2,1)}
-.portrait:hover img{transform:scale(1.08) rotate(-1.5deg)}
+    /* Center card — minimal */
+    .stage{width:760px;max-width:94vw;border-radius:18px;padding:44px 36px;display:flex;flex-direction:column;align-items:center;gap:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.06);box-shadow:0 30px 80px rgba(2,6,23,0.6)}
 
-/* small badge with initials */
-.initials{position:absolute;right:-6px;bottom:-6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:8px 10px;border-radius:12px;font-weight:800;color:#061022;font-family:Poppins;box-shadow:0 6px 18px rgba(0,0,0,0.45)}
+    /* Unique profile: layered clipped shapes + ring */
+    .portrait{
+      position:relative;width:220px;height:220px;border-radius:34px;display:grid;place-items:center;overflow:visible;transform:translateY(-12px);
+    }
+    .ring{position:absolute;inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);width:240px;height:240px;border-radius:20px;filter:blur(22px);opacity:0.55;background:conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--highlight));mix-blend-mode:screen}
+    .portrait .frame{width:200px;height:200px;border-radius:28px;overflow:hidden;position:relative;border:2px solid rgba(255,255,255,0.06);backdrop-filter:blur(6px)}
+    .portrait img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform .9s cubic-bezier(.2,.9,.2,1)}
+    .portrait:hover img{transform:scale(1.08) rotate(-1.5deg)}
 
-/* Name and micro info */
-.name{font-family:Poppins;font-weight:800;font-size:28px;letter-spacing:0.3px}
-.sub{color:var(--muted);font-weight:600}
+    /* small badge with initials */
+    .initials{position:absolute;right:-6px;bottom:-6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:8px 10px;border-radius:12px;font-weight:800;color:#061022;font-family:Poppins;box-shadow:0 6px 18px rgba(0,0,0,0.45)}
 
-/* Action icons row */
-.actions{display:flex;gap:14px;align-items:center}
-.icon-btn{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:12px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s;position:relative}
-.icon-btn:active{transform:translateY(2px) scale(.995)}
-.icon-btn:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.45)}
-.icon{font-size:20px;display:block}
-.icon-label{font-size:11px;color:var(--muted);margin-top:6px}
+    /* Name and micro info */
+    .name{font-family:Poppins;font-weight:800;font-size:28px;letter-spacing:0.3px}
+    .sub{color:var(--muted);font-weight:600}
 
-/* highlight shimmer on hover & press */
-.icon-btn::after{content:'';position:absolute;inset:0;border-radius:10px;box-shadow:0 0 0 0 rgba(0,0,0,0);transition:box-shadow .18s ease}
-.icon-btn:hover::after{box-shadow:0 12px 40px rgba(100,211,255,0.06)}
+    /* Action icons row */
+    .actions{display:flex;gap:14px;align-items:center}
+    .icon-btn{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:12px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s;position:relative;overflow:hidden}
+    .icon-btn:active{transform:translateY(2px) scale(.995)}
+    .icon-btn:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.45)}
+    .icon{font-size:20px;display:block}
+    .icon-label{font-size:11px;color:var(--muted);margin-top:6px}
 
-/* glowing outline when focused */
-.icon-btn:focus{outline:3px solid rgba(100,211,255,0.14)}
+    /* highlight shimmer on hover & press */
+    .icon-btn::after{content:'';position:absolute;inset:0;border-radius:10px;box-shadow:0 0 0 0 rgba(0,0,0,0);transition:box-shadow .18s ease}
+    .icon-btn:hover::after{box-shadow:0 12px 40px rgba(100,211,255,0.06)}
 
-/* download CTA pinned bottom inside stage */
-.cta-wrap{width:100%;display:flex;justify-content:center}
-.download{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061022;font-weight:800;border:none;cursor:pointer;font-family:Poppins;box-shadow:0 12px 30px rgba(100,211,255,0.12);transition:transform .14s ease,box-shadow .14s}
-.download:active{transform:translateY(2px)}
-.download:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(100,211,255,0.18)}
+    /* glowing outline when focused */
+    .icon-btn:focus{outline:3px solid rgba(100,211,255,0.14)}
 
-.copyright{font-size:13px;color:var(--muted);margin-top:6px}
+    /* download CTA pinned bottom inside stage */
+    .cta-wrap{width:100%;display:flex;justify-content:center}
+    .download{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061022;font-weight:800;border:none;cursor:pointer;font-family:Poppins;box-shadow:0 12px 30px rgba(100,211,255,0.12);transition:transform .14s ease,box-shadow .14s}
+    .download:active{transform:translateY(2px)}
+    .download:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(100,211,255,0.18)}
 
-/* subtle floating particles */
-.particle{position:absolute;border-radius:999px;opacity:0.12;filter:blur(8px)}
-.p1{width:220px;height:220px;left:-80px;top:8vh;background:radial-gradient(circle at 30% 30%, var(--accent1), transparent)}
-.p2{width:160px;height:160px;right:-60px;bottom:10vh;background:radial-gradient(circle at 70% 60%, var(--accent2), transparent)}
+    .copyright{font-size:13px;color:var(--muted);margin-top:6px}
 
-/* responsive */
-@media (max-width:520px){.stage{padding:28px 18px}.portrait{width:160px;height:160px}.ring{width:180px;height:180px}.name{font-size:20px}}
+    /* subtle floating particles */
+    .particle{position:absolute;border-radius:999px;opacity:0.12;filter:blur(8px)}
+    .p1{width:220px;height:220px;left:-80px;top:8vh;background:radial-gradient(circle at 30% 30%, var(--accent1), transparent)}
+    .p2{width:160px;height:160px;right:-60px;bottom:10vh;background:radial-gradient(circle at 70% 60%, var(--accent2), transparent)}
 
-/* touch feedback: ripple on icon press */
-.ripple{position:absolute;border-radius:50%;transform:scale(0);animation:ripple .6s linear;opacity:0.35;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
-@keyframes ripple{to{transform:scale(8);opacity:0}}
+    /* responsive */
+    @media (max-width:520px){.stage{padding:28px 18px}.portrait{width:160px;height:160px}.ring{width:180px;height:180px}.name{font-size:20px}}
 
+    /* touch feedback: ripple on icon press */
+    .ripple{position:absolute;border-radius:50%;transform:scale(0);animation:ripple .6s linear;opacity:0.35;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
+    @keyframes ripple{to{transform:scale(8);opacity:0}}
+
+    /* subtle entrance */
+    .stage{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.9,.2,1)}
+    .stage.is-visible{opacity:1;transform:none}
   </style>
 </head>
 <body>
   <div class="mesh" aria-hidden="true"></div>
   <div class="particle p1" aria-hidden="true"></div>
-  <div class="particle p2" aria-hidden="true"></div>  <main class="stage" role="main" aria-labelledby="profile-name"><div class="portrait" aria-hidden="false">
-  <div class="ring" aria-hidden="true"></div>
-  <div class="frame" tabindex="0" role="img" aria-label="Profile photo">
-    <img id="mainPhoto" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=500&auto=format&fit=crop" alt="Profile photo of Lathesh"/>
-  </div>
-  <div class="initials">LS</div>
-</div>
+  <div class="particle p2" aria-hidden="true"></div>
 
-<div style="text-align:center">
-  <div id="profile-name" class="name">LATHESH S M</div>
-  <div class="sub">Full‑Stack Developer • React • Node.js • IoT</div>
-</div>
+  <main class="stage" role="main" aria-labelledby="profile-name">
+    <div class="portrait" aria-hidden="false">
+      <div class="ring" aria-hidden="true"></div>
+      <div class="frame" tabindex="0" role="img" aria-label="Profile photo">
+        <img id="mainPhoto" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=500&auto=format&fit=crop" alt="Profile photo of Lathesh"/>
+      </div>
+      <div class="initials">LS</div>
+    </div>
 
-<div class="actions" role="navigation" aria-label="Contact and links">
-  <button class="icon-btn" data-hint="Email" id="btnEmail" aria-label="Email">
-    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 7.5L12 13 3 7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
+    <div style="text-align:center">
+      <div id="profile-name" class="name">LATHESH S M</div>
+      <div class="sub">Full-Stack Developer • React • Node.js • IoT</div>
+    </div>
 
-  <button class="icon-btn" data-hint="Phone" id="btnPhone" aria-label="Phone">
-    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 5.18 2 2 0 0 1 5 3h3.09a1 1 0 0 1 1 .75c.12.66.34 1.3.64 1.9a1 1 0 0 1-.23 1.05L8.91 8.91a16 16 0 0 0 6.18 6.18l1.21-1.21a1 1 0 0 1 1.05-.23c.6.3 1.24.52 1.9.64a1 1 0 0 1 .75 1V16.92z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
+    <div class="actions" role="navigation" aria-label="Contact and links">
+      <button class="icon-btn" data-hint="Email" id="btnEmail" aria-label="Email">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 7.5L12 13 3 7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
 
-  <button class="icon-btn" data-hint="GitHub" id="btnGit" aria-label="GitHub" onclick="openLink('https://github.com/latheshsm')">
-    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.1 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke="currentColor" stroke-width="0.4"/></svg>
-  </button>
+      <button class="icon-btn" data-hint="Phone" id="btnPhone" aria-label="Phone">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.92V20a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 5.18 2 2 0 0 1 5 3h3.09a1 1 0 0 1 1 .75c.12.66.34 1.3.64 1.9a1 1 0 0 1-.23 1.05L8.91 8.91a16 16 0 0 0 6.18 6.18l1.21-1.21a1 1 0 0 1 1.05-.23c.6.3 1.24.52 1.9.64a1 1 0 0 1 .75 1V16.92z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
 
-  <button class="icon-btn" data-hint="Portfolio" id="btnWeb" aria-label="Portfolio" onclick="openLink('https://portfolio.example.com')">
-    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-</div>
+      <button class="icon-btn" data-hint="GitHub" id="btnGit" aria-label="GitHub" onclick="openLink('https://github.com/latheshsm')">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke="currentColor" stroke-width="0.4"/></svg>
+      </button>
 
-<div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:8px">
-  <div class="cta-wrap">
-    <a id="downloadBtn" class="download" href="#" download="Lathesh_SM_Resume.pdf" role="button">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="transform:translateY(1px)"><path d="M12 3v12" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 11l4 4 4-4" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Download Resume
-    </a>
-  </div>
-  <div class="copyright">© <span id="year"></span> LATHESH S M</div>
-</div>
+      <button class="icon-btn" data-hint="Portfolio" id="btnWeb" aria-label="Portfolio" onclick="openLink('https://portfolio.example.com')">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
 
-  </main>  <script>
+    <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div class="cta-wrap">
+        <a id="downloadBtn" class="download" href="#" download="Lathesh_SM_Resume.pdf" role="button" aria-label="Download Resume">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="transform:translateY(1px)"><path d="M12 3v12" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 11l4 4 4-4" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="#061022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download Resume
+        </a>
+      </div>
+      <div class="copyright">© <span id="year"></span> LATHESH S M</div>
+    </div>
+  </main>
+
+  <script>
+    // reveal animation
+    window.addEventListener('load', () => document.querySelector('.stage').classList.add('is-visible'));
+
     // set year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // small utilities
+    // simple open link helper
     function openLink(url){ window.open(url, '_blank', 'noopener'); }
 
-    // icon ripple on press and highlight on hover
+    // icon ripple, hover highlight and keyboard activation
     document.querySelectorAll('.icon-btn').forEach(btn=>{
       btn.addEventListener('click', (e)=>{
         // ripple
         const r = document.createElement('span');
         r.className = 'ripple';
         const rect = btn.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
+        const size = Math.max(rect.width, rect.height) * 1.2;
         r.style.width = r.style.height = size + 'px';
         r.style.left = (e.clientX - rect.left - size/2) + 'px';
         r.style.top = (e.clientY - rect.top - size/2) + 'px';
         btn.appendChild(r);
-        setTimeout(()=> r.remove(), 600);
+        setTimeout(()=> r.remove(), 700);
 
-        // quick feedback (aria) — focus for keyboard users
+        // focus for keyboard/screen reader users
         btn.focus();
       });
 
-      // keyboard activate
       btn.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
 
-      // hover highlight (add glowing stroke)
       btn.addEventListener('mouseenter', ()=> btn.style.boxShadow = '0 20px 40px rgba(100,211,255,0.12)');
       btn.addEventListener('mouseleave', ()=> btn.style.boxShadow = '');
     });
 
-    // Download button - in this demo it will create a simple PDF client-side with name & contact (minimal)
+    // Download button demo: creates a simple text file (placeholder).
     document.getElementById('downloadBtn').addEventListener('click', async (e)=>{
       e.preventDefault();
-      // create a minimal text-based PDF using Blob and URL (simple fallback demo)
+      // Basic resume content — replace with real PDF generation if you want
       const name = 'LATHESH S M';
       const email = 'latheshsm@email.com';
-      const content = `${name}
-Full-Stack Developer
-${email}`;
-      const blob = new Blob([content], { type: 'text/plain' });
+      const phone = '+91-9XXXXXXXXX';
+      const text = `${name}\nFull-Stack Developer\n${email}\n${phone}\n\nExperience:\n- Frontend Developer Intern — XYZ Labs\n- Smart Dustbin (IoT) project\n\nProjects:\n- Weatherly (PWA)\n- TaskFlow (Kanban)\n\nSkills:\nJavaScript, React, Node.js, MongoDB, HTML, CSS\n`;
+      const blob = new Blob([text], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'Lathesh_SM_Resume.txt'; // replace with .pdf when you have a real PDF file
+      a.download = 'Lathesh_SM_Resume.txt'; // placeholder; I can switch to PDF export if you want
       document.body.appendChild(a);
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
     });
 
-    // make main photo tappable to change (mobile)
-    document.getElementById('mainPhoto').addEventListener('click', ()=> alert('To change photo: replace the src in the HTML or implement file upload.'));
-  </script></body>
-</html>
+    // Click on photo - hint for how to replace (you can replace src in HTML or request upload feature)
+    document.getElementById('mainPhoto').addEventListener('click', ()=> {
+      // lightweight UX hint for the user
+      alert('To change the profile image: edit the <img id=\"mainPhoto\"> src in the HTML or ask me to add an upload control.');
+    });
+  </script>
+</body>
+          </html>
