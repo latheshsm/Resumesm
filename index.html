@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>LATHESH S M — Responsive Portfolio</title>
+<title>LATHESH S M — Responsive Portfolio (Mobile menu fix)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -12,7 +12,7 @@
     --fg:#e8f1ff; --muted:#9fb0d0; --card-bg: rgba(255,255,255,0.02);
 
     /* brand colors */
-    --gh: #181717;
+    --gh: #f3f7fb;   /* GitHub icon visible (light) */
     --gm: #D44638;
     --wa: #25D366;
     --li: #0077B5;
@@ -40,7 +40,8 @@
     pointer-events:none;
   }
   @media (max-width:720px){
-    .plate{ height:480px; transform: translateY(36px) scale(.98) }  }
+    .plate{ height:480px; transform: translateY(36px) scale(.98) }
+  }
 
   /* stage/card */
   .stage{
@@ -95,14 +96,14 @@
   .icon{ width:22px; height:22px; display:block; color:currentColor }
   .icon-btn:focus{ outline:3px solid rgba(100,211,255,0.14) }
 
-  /* brand color assignments via class */
-  .gh { color:var(--gh); }   /* GitHub */
+  /* brand color classes (GitHub changed to a light tone for visibility) */
+  .gh { color:var(--gh); }   /* GitHub (light for visibility) */
   .gm { color:var(--gm); }   /* Gmail */
   .wa { color:var(--wa); }   /* WhatsApp */
   .li { color:var(--li); }   /* LinkedIn */
 
   /* hover fills (brand) + icon becomes white */
-  .icon-btn.gh:hover{ color:#fff; background: linear-gradient(90deg, rgba(24,24,23,0.08), rgba(0,0,0,0.28)); }
+  .icon-btn.gh:hover{ color:#061022; background: linear-gradient(90deg,#f7fbff, #d9f7ff); } /* subtle light fill for GH */
   .icon-btn.gm:hover{ color:#fff; background: linear-gradient(90deg, #ffd0cc, var(--gm)); }
   .icon-btn.wa:hover{ color:#fff; background: linear-gradient(90deg, #c6fbd8, var(--wa)); }
   .icon-btn.li:hover{ color:#fff; background: linear-gradient(90deg, #bfe3fb, var(--li)); }
@@ -111,17 +112,57 @@
   .ripple{ position:absolute; border-radius:50%; transform:scale(0); animation:ripple .6s linear; opacity:0.35; pointer-events:none; }
   @keyframes ripple{ to{ transform:scale(8); opacity:0 } }
 
-  /* content area */
-  .panel{ width:100%; max-width:680px; min-height:96px; border-radius:12px; padding:14px; background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
-          border:1px solid rgba(255,255,255,0.04); color:var(--muted); transform-origin:top center; transition: transform .38s cubic-bezier(.2,.9,.2,1), opacity .28s; opacity:0; transform:translateY(-10px) scale(.995); display:none; }
+  /* ---------- ACCENT WRAP: animated gradient border (the circled area) ---------- */
+  .accent-wrap{
+    position:relative;
+    border-radius:16px;
+    padding:8px; /* space for border */
+    margin-top:6px;
+    width:100%;
+    max-width:680px;
+    z-index:2;
+  }
+
+  .accent-wrap::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:18px;
+    background: conic-gradient( from 0deg, rgba(100,211,255,0.95), rgba(181,107,255,0.95), rgba(255,128,192,0.95), rgba(0,255,163,0.95) );
+    filter: blur(12px);
+    opacity:0.95;
+    transform: scale(1.02);
+    z-index:0;
+    animation: rotate 6s linear infinite;
+    mix-blend-mode: screen;
+  }
+
+  .accent-wrap::after{
+    content:'';
+    position:absolute;
+    inset:7px; /* thickness of visible ring = 7px */
+    border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    z-index:1;
+  }
+
+  @keyframes rotate{
+    from{ transform: rotate(0deg) scale(1.02); }
+    to{ transform: rotate(360deg) scale(1.02); }
+  }
+
+  /* panel sits above the accent::after so text is crisp */
+  .panel{ position:relative; z-index:2; width:100%; max-width:100%; min-height:96px; border-radius:12px; padding:14px; color:var(--muted);
+          transform-origin:top center; transition: transform .38s cubic-bezier(.2,.9,.2,1), opacity .28s; opacity:0; transform:translateY(-10px) scale(.995); display:none; }
   .panel.is-open{ display:block; opacity:1; transform:translateY(0) scale(1); }
   .panel h3{ margin:0 0 8px 0; color:var(--fg); font-family:Poppins; font-weight:700 }
   .skills-list{ display:flex; gap:10px; flex-wrap:wrap }
   .skill-pill{ padding:8px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); font-weight:700; color:var(--fg) }
 
-  /* download CTA */
+  /* download CTA (keep it inside the accent area) */
   .download{ display:inline-flex; align-items:center; gap:10px; padding:10px 16px; border-radius:12px; background:linear-gradient(90deg,var(--accent1),var(--accent2));
-             color:#061022; font-weight:800; border:none; cursor:pointer; font-family:Poppins; transition:transform .14s, box-shadow .14s; }
+             color:#061022; font-weight:800; border:none; cursor:pointer; font-family:Poppins; transition:transform .14s, box-shadow .14s; z-index:3; }
   .download:hover{ transform:translateY(-6px); box-shadow:0 28px 60px rgba(100,211,255,0.12) }
 
   /* card entrance */
@@ -142,10 +183,18 @@
   /* responsive behavior */
   @media (max-width:720px){
     .stage{ width:92vw; padding:22px; gap:14px }
-    /* icons remain visible under the photo on mobile as requested */
+
+    /* keep icons visible under photo on mobile (as requested) */
     .actions{ display:flex }
+
     .fixed-menu{ gap:8px }
-    .menu-btn{ display:none }             /* hide normal menu button; show hamburger instead */
+
+    /* hide only the fixed-menu's desktop buttons on small screens, not the mobile overlay buttons */
+    .fixed-menu .menu-btn{ display:none }
+
+    /* ensure overlay's menu buttons are visible inside mobile overlay */
+    .mobile-overlay .menu-btn{ display:inline-flex }
+
     .hamburger{ display:flex }           /* show hamburger top-right */
     .mobile-overlay{ right:12px; top:64px }
   }
@@ -201,13 +250,17 @@
     </button>
   </div>
 
-  <!-- About / Skills panel -->
-  <section id="panel" class="panel" aria-live="polite"></section>
+  <!-- accent wrap - animated gradient border around the panel -->
+  <div class="accent-wrap">
+    <!-- About / Skills panel (JS uses #panel) -->
+    <section id="panel" class="panel" aria-live="polite"></section>
 
-  <!-- download CTA -->
-  <div style="margin-top:6px; display:flex; flex-direction:column; align-items:center; gap:8px;">
-    <button class="download" id="downloadBtn" aria-label="Download resume">⬇ Download Resume</button>
+    <!-- download CTA (kept inside the accent area so border surrounds it) -->
+    <div style="margin-top:12px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+      <button class="download" id="downloadBtn" aria-label="Download resume">⬇ Download Resume</button>
+    </div>
   </div>
+
 </main>
 
 <!-- fixed menu (desktop) and hamburger (mobile) at top-right outside the card -->
@@ -333,6 +386,10 @@
     overlayOpen = !overlayOpen;
     hamburger.setAttribute('aria-expanded', overlayOpen ? 'true' : 'false');
     mobileOverlay.classList.toggle('open', overlayOpen);
+  });
+
+  document.getElementById('mAbout')?.addEventListener('click', ()=> { openPanel('about'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
+  document.getElementById('mSkills')?.addEventListener('click', ()=> { openPanel('skills'); overlayOpen = false; mobileOverlay.classList.toggle('open', overlayOpen);
   });
 
   document.getElementById('mAbout')?.addEventListener('click', ()=> { openPanel('about'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
