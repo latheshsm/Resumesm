@@ -10,6 +10,12 @@
     --bg1:#071029; --bg2:#0b1228;
     --accent1:#64d3ff; --accent2:#b56bff; --accent3:#00ffa3;
     --fg:#e8f1ff; --muted:#9fb0d0; --card-bg: rgba(255,255,255,0.02);
+
+    /* brand colors */
+    --gh: #ffffff; /* GitHub visible on dark */
+    --gm: #D44638; /* Gmail */
+    --wa: #25D366; /* WhatsApp */
+    --li: #0077B5; /* LinkedIn */
   }
   *{box-sizing:border-box}
   html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:var(--fg);-webkit-font-smoothing:antialiased}
@@ -26,7 +32,9 @@
   .stage{
     width:760px; max-width:96vw; border-radius:18px; padding:36px; position:relative;
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.06); box-shadow: 0 30px 80px rgba(2,6,23,0.6);
+    /* stronger visible border so outside border is visible on dark bg */
+    border:1px solid rgba(100,211,255,0.12);
+    box-shadow: 0 30px 80px rgba(2,6,23,0.6);
     display:flex;flex-direction:column;align-items:center; gap:18px;
   }
 
@@ -51,13 +59,15 @@
   .hamburger .bar::before{ top:-6px } .hamburger .bar::after{ top:6px }
 
   /* portrait */
-  .portrait{ position:relative; width:220px; height:220px; border-radius:34px; display:grid; place-items:center; overflow:visible; }
+  .portrait{ position:relative; width:220px; height:220px; border-radius:0; display:grid; place-items:center; overflow:visible; }
+  /* keep ring for effect */
   .ring{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:240px; height:240px; border-radius:20px;
          filter:blur(22px); opacity:0.55; background: conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--accent3)); mix-blend-mode:screen;}
-  .frame{ width:200px; height:200px; border-radius:28px; overflow:hidden; border:2px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
+  /* photo FRAME: removed border-radius as requested (square photo) */
+  .frame{ width:200px; height:200px; border-radius:0; overflow:hidden; border:2px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
   .frame img{ width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.02); transition:transform .85s cubic-bezier(.2,.9,.2,1); 
-              animation: hueCycle 5s linear infinite; will-change: filter; }
-  .portrait:hover .frame img{ transform:scale(1.08) rotate(-1.2deg); }
+              animation: hueCycle 5s linear infinite; will-change: filter; border-radius:0; } /* no radius on image */
+  .portrait:hover .frame img{ transform:scale(1.06) rotate(-0.8deg); }
 
   @keyframes hueCycle { 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(360deg)} }
 
@@ -67,20 +77,37 @@
   .name{ font-family:Poppins; font-weight:800; font-size:26px; letter-spacing:0.2px; text-align:center }
   .sub{ color:var(--muted); font-weight:600; text-align:center; margin-top:6px }
 
-  /* action icons (visible on desktop) */
-  .actions{ display:flex; gap:14px; margin-top:6px }
+  /* action icons: always under the photo (both desktop & mobile) */
+  .actions{ display:flex; gap:14px; margin-top:6px; justify-content:center; }
   .icon-btn{ display:inline-grid; place-items:center; width:56px; height:56px; border-radius:12px; background: rgba(255,255,255,0.02);
-             border:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:transform .18s, box-shadow .18s; position:relative; overflow:hidden }
+             border:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:transform .18s, box-shadow .18s; position:relative; overflow:hidden; color:var(--fg); }
   .icon-btn:hover{ transform:translateY(-6px); box-shadow:0 22px 44px rgba(2,6,23,0.5) }
-  .icon{ width:22px; height:22px; display:block; color:var(--fg) }
+  .icon{ width:22px; height:22px; display:block; color:currentColor }
   .icon-btn:focus{ outline:3px solid rgba(100,211,255,0.14) }
+
+  /* brand color classes */
+  .gh { color:var(--gh); }   /* GitHub (light for visibility) */
+  .gm { color:var(--gm); }   /* Gmail */
+  .wa { color:var(--wa); }   /* WhatsApp */
+  .li { color:var(--li); }   /* LinkedIn */
+
+  /* hover fills (brand) + icon becomes white (or dark for GH) */
+  .icon-btn.gh:hover{ color:#061022; background: linear-gradient(90deg,#f7fbff, #e6f8ff); } /* GH hover */
+  .icon-btn.gm:hover{ color:#fff; background: linear-gradient(90deg, #ffd0cc, var(--gm)); }
+  .icon-btn.wa:hover{ color:#fff; background: linear-gradient(90deg, #c6fbd8, var(--wa)); }
+  .icon-btn.li:hover{ color:#fff; background: linear-gradient(90deg, #bfe3fb, var(--li)); }
 
   .ripple{ position:absolute; border-radius:50%; transform:scale(0); animation:ripple .6s linear; opacity:0.35; background: linear-gradient(90deg,var(--accent1),var(--accent2)); pointer-events:none; }
   @keyframes ripple{ to{ transform:scale(8); opacity:0 } }
 
-  /* content area */
-  .panel{ width:100%; max-width:680px; min-height:96px; border-radius:12px; padding:14px; background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
-          border:1px solid rgba(255,255,255,0.04); color:var(--muted); transform-origin:top center; transition: transform .38s cubic-bezier(.2,.9,.2,1), opacity .28s; opacity:0; transform:translateY(-10px) scale(.995); display:none; }
+  /* panel: make the about/skills panel have visible border + rounded corners */
+  .panel{
+    width:100%; max-width:680px; min-height:96px; border-radius:14px; padding:16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    border:2px solid rgba(100,211,255,0.14); color:var(--muted);
+    transform-origin:top center; transition: transform .28s cubic-bezier(.2,.9,.2,1), opacity .22s; opacity:0; transform:translateY(-8px) scale(.995); display:none;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+  }
   .panel.is-open{ display:block; opacity:1; transform:translateY(0) scale(1); }
   .panel h3{ margin:0 0 8px 0; color:var(--fg); font-family:Poppins; font-weight:700 }
   .skills-list{ display:flex; gap:10px; flex-wrap:wrap }
@@ -106,12 +133,15 @@
   .page-footer{ position:fixed; left:0; right:0; bottom:12px; display:flex; align-items:center; justify-content:center; pointer-events:none }
   .page-footer .text{ color:var(--muted); font-size:13px; pointer-events:auto; padding:6px 10px; border-radius:8px; background:rgba(0,0,0,0.12) }
 
-  /* responsive behavior */
+  /* responsive adjustments */
   @media (max-width:720px){
     .stage{ width:92vw; padding:22px; gap:14px }
-    .actions{ display:none }              /* hide icons on small screens */
+    /* keep icons visible under photo on small screens as requested */
+    .actions{ display:flex }
     .fixed-menu{ gap:8px }
-    .menu-btn{ display:none }             /* hide normal menu button; show hamburger instead */
+    /* hide only the fixed-menu's desktop buttons on small screens; keep mobile overlay buttons visible */
+    .fixed-menu .menu-btn{ display:none }
+    .mobile-overlay .menu-btn{ display:inline-flex }
     .hamburger{ display:flex }           /* show hamburger top-right */
     .mobile-overlay{ right:12px; top:64px }
   }
@@ -121,6 +151,7 @@
     .mobile-overlay{ display:none !important }
     .fixed-menu{ display:flex }          /* show fixed menu on desktop */
   }
+
 </style>
 </head>
 <body>
@@ -131,6 +162,7 @@
   <div class="portrait" aria-hidden="false">
     <div class="ring" aria-hidden="true"></div>
     <div class="frame" tabindex="0" role="img" aria-label="Profile photo">
+      <!-- square photo (no border-radius) -->
       <img id="photo" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=500&auto=format&fit=crop" alt="Profile photo of Lathesh">
     </div>
     <div class="initials">LS</div>
@@ -141,21 +173,21 @@
     <div class="sub">Full-Stack Developer • React • Node.js • IoT</div>
   </div>
 
-  <!-- action icons (desktop only) -->
+  <!-- action icons (always under the photo) -->
   <div class="actions" role="navigation" aria-label="Contact and links">
-    <button class="icon-btn" id="btnGit" aria-label="Open GitHub (opens new tab)">
+    <button class="icon-btn gh" id="btnGit" aria-label="Open GitHub (opens new tab)" title="GitHub">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke-width="0.4"/></svg>
     </button>
 
-    <button class="icon-btn" id="btnEmail" aria-label="Send email">
+    <button class="icon-btn gm" id="btnEmail" aria-label="Send email" title="Email">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9"/><path d="M21 7.5L12 13 3 7.5"/></svg>
     </button>
 
-    <button class="icon-btn" id="btnWhats" aria-label="Open WhatsApp chat">
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5a8.5 8.5 0 1 1-1.6-4.9L21 21l-4.9-1.6A8.5 8.5 0 0 1 21 12.5z"/><path d="M17.5 15.5c-.2-.1-1.2-.6-1.4-.6s-.4 0-.6.6-.7.6-1 .6a5 5 0 0 1-1.8-.6c-.8-.6-1.3-1.7-1.4-1.8-.1-.2 0-.5 0-.7s-.2-.4-.5-.7c-.3-.4-.3-.7 0-.9s.6-.3.9-.3.6 0 .8.2.2.3.4.3.6-.1 1-.1c.5 0 .9.1 1.3.3.5.3.8.7 1 1.1.2.4.2.8 0 1.1-.1.2-.3.4-.5.4z"/></svg>
+    <button class="icon-btn wa" id="btnWhats" aria-label="Open WhatsApp chat" title="WhatsApp">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5a8.5 8.5 0 1 1-1.6-4.9L21 21l-4.9-1.6A8.5 8.5 0 0 1 21 12.5z"/><path d="M17.5 15.5c-.2-.1-1.2-.6-1.4-.6s-.4 0-.6.6-.7.6-1 .6a5 5 0 0 1-1.8-.6c-.8-.6-1.3-1.7-1.4-1.8-.1-.2 0-.5 0-.7s-.2-.4-.5-.7c-.3-.4-.3-.7 0-.9s.6-.3.9-.3.6 0 .8.2.2.3.4.3.6-.1 1-.1c.5 0 .9.1 1.3.3.5.3.8.7 1 1.1.2.4.2.8 0 1.1-.1.2-.3.4-.5.4"/></svg>
     </button>
 
-    <button class="icon-btn" id="btnLinked" aria-label="Open LinkedIn (opens new tab)">
+    <button class="icon-btn li" id="btnLinked" aria-label="Open LinkedIn (opens new tab)" title="LinkedIn">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2"/></svg>
     </button>
   </div>
@@ -183,10 +215,10 @@
 <!-- mobile overlay that shows icons + menu items when hamburger toggled -->
 <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true">
   <div style="display:flex; gap:10px;">
-    <button class="icon-btn" id="mGit" aria-label="GitHub (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke-width="0.4"/></svg></button>
-    <button class="icon-btn" id="mEmail" aria-label="Email (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9"/><path d="M21 7.5L12 13 3 7.5"/></svg></button>
-    <button class="icon-btn" id="mWhats" aria-label="WhatsApp (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5a8.5 8.5 0 1 1-1.6-4.9L21 21l-4.9-1.6A8.5 8.5 0 0 1 21 12.5z"/><path d="M17.5 15.5c-.2-.1-1.2-.6-1.4-.6s-.4 0-.6.6-.7.6-1 .6a5 5 0 0 1-1.8-.6c-.8-.6-1.3-1.7-1.4-1.8-.1-.2 0-.5 0-.7s-.2-.4-.5-.7c-.3-.4-.3-.7 0-.9s.6-.3.9-.3.6 0 .8.2.2.3.4.3.6-.1 1-.1c.5 0 .9.1 1.3.3.5.3.8.7 1 1.1.2.4.2.8 0 1.1-.1.2-.3.4-.5.4z"/></svg></button>
-    <button class="icon-btn" id="mLinked" aria-label="LinkedIn (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2"/></svg></button>
+    <button class="icon-btn gh" id="mGit" aria-label="GitHub (mobile)" title="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke-width="0.4"/></svg></button>
+    <button class="icon-btn gm" id="mEmail" aria-label="Email (mobile)" title="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9"/><path d="M21 7.5L12 13 3 7.5"/></svg></button>
+    <button class="icon-btn wa" id="mWhats" aria-label="WhatsApp (mobile)" title="WhatsApp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5a8.5 8.5 0 1 1-1.6-4.9L21 21l-4.9-1.6A8.5 8.5 0 0 1 21 12.5z"/><path d="M17.5 15.5c-.2-.1-1.2-.6-1.4-.6s-.4 0-.6.6-.7.6-1 .6a5 5 0 0 1-1.8-.6c-.8-.6-1.3-1.7-1.4-1.8-.1-.2 0-.5 0-.7s-.2-.4-.5-.7c-.3-.4-.3-.7 0-.9s.6-.3.9-.3.6 0 .8.2.2.3.4.3.6-.1 1-.1c.5 0 .9.1 1.3.3.5.3.8.7 1 1.1.2.4.2.8 0 1.1-.1.2-.3.4-.5.4"/></svg></button>
+    <button class="icon-btn li" id="mLinked" aria-label="LinkedIn (mobile)" title="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2"/></svg></button>
   </div>
 
   <div style="display:flex; gap:8px; margin-top:8px;">
@@ -213,11 +245,9 @@
   // utility
   function openSafe(url){ window.open(url, '_blank', 'noopener'); }
 
-  // desktop fixed menu buttons
+  // panel where About/Skills show
   const aboutDesktop = document.getElementById('aboutDesktop');
   const skillsDesktop = document.getElementById('skillsDesktop');
-
-  // panel where About/Skills show
   const panel = document.getElementById('panel');
 
   function openPanel(type){
@@ -246,26 +276,29 @@
     openPanel(cur ? null : 'skills');
   });
 
-  // icon buttons (desktop)
-  const btnGit = document.getElementById('btnGit');
-  const btnEmail = document.getElementById('btnEmail');
-  const btnWhats = document.getElementById('btnWhats');
-  const btnLinked = document.getElementById('btnLinked');
-
+  // ripple helper
   function createRipple(e, el){
     const r = document.createElement('span');
     r.className = 'ripple';
     const rect = el.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height) * 1.2;
     r.style.width = r.style.height = size + 'px';
-    r.style.left = (e.clientX - rect.left - size/2) + 'px';
-    r.style.top = (e.clientY - rect.top - size/2) + 'px';
+    // if clientX/Y are zero (keyboard activation), center ripple
+    const cx = e.clientX || (rect.left + rect.width/2);
+    const cy = e.clientY || (rect.top + rect.height/2);
+    r.style.left = (cx - rect.left - size/2) + 'px';
+    r.style.top = (cy - rect.top - size/2) + 'px';
     el.appendChild(r);
     setTimeout(()=> r.remove(), 700);
     el.focus();
   }
 
   // wire desktop icons
+  const btnGit = document.getElementById('btnGit');
+  const btnEmail = document.getElementById('btnEmail');
+  const btnWhats = document.getElementById('btnWhats');
+  const btnLinked = document.getElementById('btnLinked');
+
   btnGit && btnGit.addEventListener('click', (e)=> { createRipple(e, btnGit); openSafe(GITHUB_URL); });
   btnEmail && btnEmail.addEventListener('click', (e)=> { createRipple(e, btnEmail); window.location.href = `mailto:${EMAIL_ADDR}`; });
   btnWhats && btnWhats.addEventListener('click', (e)=> { createRipple(e, btnWhats); const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? openSafe(`https://wa.me/${cleaned}`) : alert('WhatsApp not configured'); });
@@ -302,19 +335,19 @@
   hamburger && hamburger.addEventListener('click', (e)=>{
     overlayOpen = !overlayOpen;
     hamburger.setAttribute('aria-expanded', overlayOpen ? 'true' : 'false');
-    mobileOverlay.classList.toggle('open', overlayOpen);
+    mobileOverlay.classList.toggle('open',overlayOpen);
   });
 
   // wire mobile overlay buttons (same actions)
-  document.getElementById('mGit').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); openSafe(GITHUB_URL); });
-  document.getElementById('mEmail').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); window.location.href = `mailto:${EMAIL_ADDR}`; });
-  document.getElementById('mWhats').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? openSafe(`https://wa.me/${cleaned}`) : alert('WhatsApp not configured'); });
-  document.getElementById('mLinked').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); openSafe(LINKEDIN_URL); });
+  document.getElementById('mGit')?.addEventListener('click', (e)=> { createRipple(e, e.currentTarget); openSafe(GITHUB_URL); });
+  document.getElementById('mEmail')?.addEventListener('click', (e)=> { createRipple(e, e.currentTarget); window.location.href = `mailto:${EMAIL_ADDR}`; });
+  document.getElementById('mWhats')?.addEventListener('click', (e)=> { createRipple(e, e.currentTarget); const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? openSafe(`https://wa.me/${cleaned}`) : alert('WhatsApp not configured'); });
+  document.getElementById('mLinked')?.addEventListener('click', (e)=> { createRipple(e, e.currentTarget); openSafe(LINKEDIN_URL); });
 
-  document.getElementById('mAbout').addEventListener('click', ()=> { openPanel('about'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
-  document.getElementById('mSkills').addEventListener('click', ()=> { openPanel('skills'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
+  document.getElementById('mAbout')?.addEventListener('click', ()=> { openPanel('about'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
+  document.getElementById('mSkills')?.addEventListener('click', ()=> { openPanel('skills'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
 
-  // small UX: click photo to open about (desktop/mobile)
+  // click photo to open about
   document.querySelector('.frame').addEventListener('click', ()=> {
     if(panel.classList.contains('is-open')) { openPanel(null); return; }
     openPanel('about');
@@ -325,4 +358,4 @@
 
 </script>
 </body>
-        </html>
+</html>
