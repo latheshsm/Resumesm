@@ -58,6 +58,12 @@
     border:2px solid transparent;
     box-shadow: 0 30px 80px rgba(2,6,23,0.6);
     display:flex;flex-direction:column;align-items:center; gap:18px;
+    transition: transform .36s cubic-bezier(.2,.9,.2,1), opacity .6s ease;
+  }
+
+  /* when menu is open on small screen, push the card down (no overlap) */
+  @media (max-width:720px){
+    .stage.pushed { transform: translateY(150px); } /* adjust Y to match height of overlay/menu */
   }
 
   /* gradient visible border around stage (colorful) */
@@ -162,19 +168,20 @@
   .download:hover{ transform:translateY(-6px); box-shadow:0 28px 60px rgba(100,211,255,0.12) }
 
   /* entrance */
-  .stage{ opacity:0; transform:translateY(8px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1) }
-  .stage.visible{ opacity:1; transform:none }
+  .stage{ opacity:0; }
+  .stage.visible{ opacity:1 }
 
   /* mobile overlay - colored border */
   .mobile-overlay{
-    position:fixed; right:14px; top:72px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    position:fixed; right:12px; top:64px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     padding:12px; border-radius:12px; box-shadow:0 16px 40px rgba(2,6,23,0.6); display:none; z-index:80;
     border:2px solid var(--border-overlay); /* colored border for overlay */
+    width:160px;
   }
   .mobile-overlay.open{ display:flex; flex-direction:column; gap:10px; align-items:center }
 
-  /* footer */
-  .page-footer{ position:fixed; left:0; right:0; bottom:12px; display:flex; align-items:center; justify-content:center; pointer-events:none }
+  /* footer (fixed bottom) */
+  .page-footer{ position:fixed; left:0; right:0; bottom:12px; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:200; }
   .page-footer .text{ color:var(--muted); font-size:13px; pointer-events:auto; padding:6px 10px; border-radius:8px; background:rgba(0,0,0,0.12) }
 
   /* responsive */
@@ -185,6 +192,7 @@
     .hamburger{ display:flex }
     .mobile-overlay .menu-btn{ display:inline-flex }
     .mobile-overlay{ right:12px; top:64px }
+    /* ensure overlay doesn't cover footer; it stays above stage and below footer naturally */
   }
 
   @media (min-width:721px){
@@ -255,7 +263,7 @@
 
 <!-- mobile overlay that shows ONLY menu items (About + Skills) when hamburger toggled -->
 <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true">
-  <div style="display:flex; gap:8px; flex-direction:column; width:140px;">
+  <div style="display:flex; gap:8px; flex-direction:column; width:100%; align-items:stretch;">
     <button class="menu-btn" id="mAbout">About</button>
     <button class="menu-btn" id="mSkills">Skills</button>
   </div>
@@ -307,16 +315,54 @@
   // mobile menu (hamburger only shows About & Skills)
   const hamburger = document.getElementById('hamburger');
   const mobileOverlay = document.getElementById('mobileOverlay');
+  const stage = document.getElementById('stage');
   let overlayOpen = false;
 
   hamburger && hamburger.addEventListener('click', ()=>{
     overlayOpen = !overlayOpen;
     hamburger.setAttribute('aria-expanded', overlayOpen ? 'true' : 'false');
     mobileOverlay.classList.toggle('open', overlayOpen);
+
+    // PUSH or UNPUSH the stage on small screens so overlay does not overlap the card
+    // Only apply push when viewport is small
+    if (window.innerWidth <= 720) {
+      if (overlayOpen) {
+        stage.classList.add('pushed');
+      } else {
+        stage.classList.remove('pushed');
+      }
+    }
   });
 
-  document.getElementById('mAbout')?.addEventListener('click', ()=> { openPanel('about'); overlayOpen=false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
-  document.getElementById('mSkills')?.addEventListener('click', ()=> { openPanel('skills'); overlayOpen=false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
+  // close mobile overlay when selecting a menu item and un-push stage
+  document.getElementById('mAbout')?.addEventListener('click', ()=> {
+    openPanel('about');
+    overlayOpen=false;
+    mobileOverlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+    stage.classList.remove('pushed');
+  });
+  document.getElementById('mSkills')?.addEventListener('click', ()=> {
+    openPanel('skills');
+    overlayOpen=false;
+    mobileOverlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+    stage.classList.remove('pushed');
+  });
+
+  // close overlay and un-push on resize if needed
+  window.addEventListener('resize', ()=>{
+    if (window.innerWidth > 720) {
+      // ensure overlay hidden and stage unpushed on larger screens
+      overlayOpen = false;
+      mobileOverlay.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
+      stage.classList.remove('pushed');
+    } else {
+      // if mobile and overlay is open, keep pushed state consistent
+      if (overlayOpen) stage.classList.add('pushed');
+    }
+  });
 
   // ripple helper
   function createRipple(e, el){
@@ -379,4 +425,4 @@
 
 </script>
 </body>
-  </html>
+</html>
