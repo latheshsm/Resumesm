@@ -3,402 +3,326 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Lathesh S M — Profile</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800;900&display=swap" rel="stylesheet">
+<title>LATHESH S M — Responsive Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#071428;
-    --card:#0f1724;
-    --muted:#95a3b6;
-    --accent-1: linear-gradient(135deg,#69f0ae,#7c4dff);
-    --accent-2: linear-gradient(135deg,#4dd0e1,#7c4dff);
-    --glass: rgba(255,255,255,0.03);
-    --glass-2: rgba(255,255,255,0.02);
-    --shadow: 0 10px 30px rgba(2,6,23,0.6);
+    --bg1:#071029; --bg2:#0b1228;
+    --accent1:#64d3ff; --accent2:#b56bff; --accent3:#00ffa3;
+    --fg:#e8f1ff; --muted:#9fb0d0; --card-bg: rgba(255,255,255,0.02);
   }
-
   *{box-sizing:border-box}
-  html,body{height:100%}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:var(--fg);-webkit-font-smoothing:antialiased}
   body{
-    margin:0;
-    font-family:Inter,system-ui,Arial;
+    min-height:100vh;
     background:
-      radial-gradient(1200px 600px at 10% 10%, rgba(79,153,255,0.04), transparent 10%),
-      radial-gradient(800px 400px at 90% 90%, rgba(124,77,255,0.03), transparent 10%),
-      var(--bg);
-    color:#e6eef8;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:28px;
+      radial-gradient(600px 400px at 10% 10%, rgba(100,211,255,0.06), transparent 20%),
+      radial-gradient(600px 400px at 90% 90%, rgba(181,107,255,0.05), transparent 18%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+    display:flex;align-items:center;justify-content:center;padding:28px;overflow-x:hidden;
   }
 
-  /* Header */
-  header{
-    position:fixed;
-    top:18px;
-    right:18px;
-    display:flex;
-    gap:12px;
-    align-items:center;
-    z-index:40;
-  }
-  .header-links{
-    display:flex;
-    gap:10px;
-    align-items:center;
-  }
-  .nav-link{
-    background:var(--glass);
-    padding:8px 12px;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,0.03);
-    font-weight:600;
-    font-size:13px;
-    color:var(--muted);
-    cursor:pointer;
-  }
-  .nav-link:hover{ color:#fff; transform:translateY(-2px); }
-
-  /* hamburger */
-  .hamburger{
-    width:54px;
-    height:54px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.03);
-    cursor:pointer;
-    backdrop-filter: blur(4px);
-  }
-
-  .hamburger svg{ width:24px; height:24px; color:rgba(255,255,255,0.9) }
-
-  /* mobile menu (hidden by default) */
-  .mobile-menu{
-    position:fixed;
-    top:80px;
-    right:18px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
-    border-radius:12px;
-    padding:12px;
-    border:1px solid rgba(255,255,255,0.03);
-    display:none;
-    min-width:160px;
-    box-shadow: var(--shadow);
-  }
-  .mobile-menu a{
-    display:block;
-    text-decoration:none;
-    color:var(--muted);
-    padding:8px 10px;
-    border-radius:8px;
-    font-weight:600;
-  }
-  .mobile-menu a:hover{ background:rgba(255,255,255,0.02); color:#fff }
-
-  /* Card */
-  .card-wrap{
-    width:100%;
-    max-width:760px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:70vh;
-  }
-  .card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
-    padding:34px;
-    border-radius:14px;
-    box-shadow: var(--shadow);
-    border:1px solid rgba(255,255,255,0.03);
-    width:100%;
-  }
-
-  .profile{
-    display:flex;
-    gap:22px;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-  }
-
-  /* profile image with gradient glow border outside */
-  .avatar-wrap{
-    position:relative;
-    width:210px;
-    height:210px;
-    border-radius:28px;
-    margin:0 auto 8px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: radial-gradient(circle at 30% 20%, rgba(124,77,255,0.14), transparent 10%),
-                radial-gradient(circle at 70% 80%, rgba(77,208,225,0.08), transparent 12%);
-    padding:12px;
-    box-shadow: 0 12px 40px rgba(36,53,85,0.7);
-  }
-  .avatar{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    border-radius:18px;
-    display:block;
-    border:6px solid transparent; /* space for outer effect */
-    transition:transform .25s ease, box-shadow .25s ease;
-  }
-  .avatar-wrap::after{
-    content:'';
-    position:absolute;
-    inset:-6px;
-    border-radius:28px;
-    padding:2px;
-    background: linear-gradient(135deg,#69f0ae30,#7c4dff55);
-    filter:blur(14px);
-    z-index:-1;
-    opacity:0.95;
-  }
-
-  .avatar:hover{ transform:scale(1.02); box-shadow:0 20px 60px rgba(124,77,255,0.18) }
-
-  /* name & subtitle */
-  h1{
-    margin:10px 0 6px;
-    font-size:30px;
-    letter-spacing:3px;
-    font-weight:900;
-  }
-  p.subtitle{
-    margin:0 0 16px;
-    color:var(--muted);
-    font-weight:600;
-  }
-
-  /* icons row */
-  .icons-row{
-    display:flex;
-    gap:12px;
-    justify-content:center;
-    margin:16px 0 18px;
-    flex-wrap:wrap;
-  }
-  .icon-btn{
-    width:58px;
-    height:58px;
-    border-radius:12px;
-    display:inline-grid;
-    place-items:center;
-    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
-    border:1px solid rgba(255,255,255,0.03);
-    cursor:pointer;
-    transition: all .22s ease;
-    color:rgba(255,255,255,0.85);
-    opacity:0.45; /* initially not visible as requested (semi-hidden) */
-  }
-  .icon-btn:hover,
-  .icon-btn:focus,
-  .icon-btn.active{
-    opacity:1;
-    transform:translateY(-6px) scale(1.03);
-    box-shadow: 0 8px 30px rgba(124,77,255,0.12), 0 1px 0 rgba(255,255,255,0.02) inset;
-    border:1px solid rgba(255,255,255,0.06);
+  /* stage/card */
+  .stage{
+    width:760px; max-width:96vw; border-radius:18px; padding:36px; position:relative;
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.06); box-shadow: 0 30px 80px rgba(2,6,23,0.6);
+    display:flex;flex-direction:column;align-items:center; gap:18px;
   }
 
-  /* colored circular badge inside corner of avatar */
-  .badge{
-    position:absolute;
-    right:-2%;
-    bottom:10%;
-    background:linear-gradient(135deg,#7c4dff,#69f0ae);
-    border-radius:12px;
-    padding:8px 10px;
-    font-weight:800;
-    color:#071428;
-    box-shadow:0 6px 24px rgba(124,77,255,0.12);
-    border:2px solid rgba(255,255,255,0.06);
+  /* fixed menu container (moved outside box, top-right) */
+  .fixed-menu{
+    position:fixed; top:18px; right:18px; display:flex; gap:10px; align-items:center; z-index:60;
+  }
+  .menu-btn{
+    background:transparent;border:1px solid rgba(255,255,255,0.04); padding:8px 12px;border-radius:10px;color:var(--fg);cursor:pointer;
+    font-weight:700; font-family:Poppins; transition:transform .18s, box-shadow .18s, background .18s;
+  }
+  .menu-btn:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(2,6,23,0.45); background: linear-gradient(90deg,var(--accent1), rgba(181,107,255,0.06));}
+  .menu-btn[aria-pressed="true"]{background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#061022; box-shadow:0 20px 48px rgba(100,211,255,0.12);}
+
+  /* hamburger for small screens */
+  .hamburger{
+    display:none; width:46px;height:46px;border-radius:10px;border:1px solid rgba(255,255,255,0.06); background:rgba(255,255,255,0.01);
+    align-items:center; justify-content:center; cursor:pointer;
+  }
+  .hamburger .bar{ width:20px; height:2px; background:var(--fg); display:block; position:relative }
+  .hamburger .bar::before, .hamburger .bar::after{ content:''; position:absolute; left:0; right:0; height:2px; background:var(--fg); }
+  .hamburger .bar::before{ top:-6px } .hamburger .bar::after{ top:6px }
+
+  /* portrait */
+  .portrait{ position:relative; width:220px; height:220px; border-radius:34px; display:grid; place-items:center; overflow:visible; }
+  .ring{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:240px; height:240px; border-radius:20px;
+         filter:blur(22px); opacity:0.55; background: conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--accent3)); mix-blend-mode:screen;}
+  .frame{ width:200px; height:200px; border-radius:28px; overflow:hidden; border:2px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
+  .frame img{ width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.02); transition:transform .85s cubic-bezier(.2,.9,.2,1); 
+              animation: hueCycle 5s linear infinite; will-change: filter; }
+  .portrait:hover .frame img{ transform:scale(1.08) rotate(-1.2deg); }
+
+  @keyframes hueCycle { 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(360deg)} }
+
+  .initials{ position:absolute; right:-6px; bottom:-6px; background:linear-gradient(90deg,var(--accent1),var(--accent2)); padding:8px 10px; border-radius:12px;
+             font-weight:800; color:#061022; font-family:Poppins; box-shadow:0 6px 18px rgba(0,0,0,0.45) }
+
+  .name{ font-family:Poppins; font-weight:800; font-size:26px; letter-spacing:0.2px; text-align:center }
+  .sub{ color:var(--muted); font-weight:600; text-align:center; margin-top:6px }
+
+  /* action icons (visible on desktop) */
+  .actions{ display:flex; gap:14px; margin-top:6px }
+  .icon-btn{ display:inline-grid; place-items:center; width:56px; height:56px; border-radius:12px; background: rgba(255,255,255,0.02);
+             border:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:transform .18s, box-shadow .18s; position:relative; overflow:hidden }
+  .icon-btn:hover{ transform:translateY(-6px); box-shadow:0 22px 44px rgba(2,6,23,0.5) }
+  .icon{ width:22px; height:22px; display:block; color:var(--fg) }
+  .icon-btn:focus{ outline:3px solid rgba(100,211,255,0.14) }
+
+  .ripple{ position:absolute; border-radius:50%; transform:scale(0); animation:ripple .6s linear; opacity:0.35; background: linear-gradient(90deg,var(--accent1),var(--accent2)); pointer-events:none; }
+  @keyframes ripple{ to{ transform:scale(8); opacity:0 } }
+
+  /* content area */
+  .panel{ width:100%; max-width:680px; min-height:96px; border-radius:12px; padding:14px; background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+          border:1px solid rgba(255,255,255,0.04); color:var(--muted); transform-origin:top center; transition: transform .38s cubic-bezier(.2,.9,.2,1), opacity .28s; opacity:0; transform:translateY(-10px) scale(.995); display:none; }
+  .panel.is-open{ display:block; opacity:1; transform:translateY(0) scale(1); }
+  .panel h3{ margin:0 0 8px 0; color:var(--fg); font-family:Poppins; font-weight:700 }
+  .skills-list{ display:flex; gap:10px; flex-wrap:wrap }
+  .skill-pill{ padding:8px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); font-weight:700; color:var(--fg) }
+
+  /* download CTA */
+  .download{ display:inline-flex; align-items:center; gap:10px; padding:10px 16px; border-radius:12px; background:linear-gradient(90deg,var(--accent1),var(--accent2));
+             color:#061022; font-weight:800; border:none; cursor:pointer; font-family:Poppins; transition:transform .14s, box-shadow .14s; }
+  .download:hover{ transform:translateY(-6px); box-shadow:0 28px 60px rgba(100,211,255,0.12) }
+
+  /* card entrance */
+  .stage{ opacity:0; transform:translateY(8px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1) }
+  .stage.visible{ opacity:1; transform:none }
+
+  /* floating overlay for mobile menu */
+  .mobile-overlay{
+    position:fixed; right:14px; top:72px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.06);
+    padding:12px; border-radius:12px; box-shadow:0 16px 40px rgba(2,6,23,0.6); display:none; z-index:80;
+  }
+  .mobile-overlay.open{ display:flex; flex-direction:column; gap:10px; align-items:center }
+
+  /* fixed footer copyright (outside card) */
+  .page-footer{ position:fixed; left:0; right:0; bottom:12px; display:flex; align-items:center; justify-content:center; pointer-events:none }
+  .page-footer .text{ color:var(--muted); font-size:13px; pointer-events:auto; padding:6px 10px; border-radius:8px; background:rgba(0,0,0,0.12) }
+
+  /* responsive behavior */
+  @media (max-width:720px){
+    .stage{ width:92vw; padding:22px; gap:14px }
+    .actions{ display:none }              /* hide icons on small screens */
+    .fixed-menu{ gap:8px }
+    .menu-btn{ display:none }             /* hide normal menu button; show hamburger instead */
+    .hamburger{ display:flex }           /* show hamburger top-right */
+    .mobile-overlay{ right:12px; top:64px }
   }
 
-  /* Download CTA */
-  .cta{
-    display:inline-block;
-    margin-top:4px;
-    padding:12px 20px;
-    border-radius:14px;
-    font-weight:800;
-    background: linear-gradient(90deg,#62e7ff,#b56bff);
-    color:#071428;
-    text-decoration:none;
-    box-shadow: 0 8px 30px rgba(98,231,255,0.08);
-    border:1px solid rgba(255,255,255,0.04);
-  }
-
-  footer{
-    text-align:center;
-    color:var(--muted);
-    margin-top:28px;
-    font-weight:600;
-    opacity:0.9;
-  }
-
-  /* Responsive rules */
-  @media (min-width:980px){
-    .profile{ flex-direction:row; text-align:left; gap:28px }
-    .avatar-wrap{ width:220px; height:220px; margin:0 }
-    .card{ padding:42px 44px }
-    .icons-row{ order:2; margin:0; }
-    .profile-info{ flex:1 }
-  }
-
-  @media (max-width:979px){
-    /* On small screens hide the header links and show hamburger */
-    .header-links{ display:none }
-    .hamburger{ display:flex }
-    .mobile-menu{ display:none } /* toggled by JS */
-    .card{ max-width:420px; border-radius:16px }
-    .avatar-wrap{ width:180px; height:180px }
-    h1{ font-size:28px }
-    .icon-btn{ width:64px; height:64px }
-  }
-
-  /* ensure both header-links and hamburger can be toggled by media query */
-  @media (min-width:980px){
+  @media (min-width:721px){
     .hamburger{ display:none }
-    .mobile-menu{ display:none }
+    .mobile-overlay{ display:none !important }
+    .fixed-menu{ display:flex }          /* show fixed menu on desktop */
   }
-
-  /* small polish for icon svgs */
-  .icon-btn svg{ width:22px; height:22px; display:block; opacity:0.95 }
 </style>
 </head>
 <body>
-  <header>
-    <nav class="header-links" aria-label="Primary">
-      <a class="nav-link" href="#about">About</a>
-      <a class="nav-link" href="#skills">Skills</a>
-    </nav>
 
-    <button class="hamburger" id="hambtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
-      <!-- 3-line icon -->
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-        <path d="M4 7h16M4 12h16M4 17h16"></path>
-      </svg>
+<main class="stage" id="stage">
+
+  <!-- portrait -->
+  <div class="portrait" aria-hidden="false">
+    <div class="ring" aria-hidden="true"></div>
+    <div class="frame" tabindex="0" role="img" aria-label="Profile photo">
+      <img id="photo" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=500&auto=format&fit=crop" alt="Profile photo of Lathesh">
+    </div>
+    <div class="initials">LS</div>
+  </div>
+
+  <div style="text-align:center;">
+    <div class="name">LATHESH S M</div>
+    <div class="sub">Full-Stack Developer • React • Node.js • IoT</div>
+  </div>
+
+  <!-- action icons (desktop only) -->
+  <div class="actions" role="navigation" aria-label="Contact and links">
+    <button class="icon-btn" id="btnGit" aria-label="Open GitHub (opens new tab)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke-width="0.4"/></svg>
     </button>
 
-    <div class="mobile-menu" id="mobileMenu" role="menu" aria-hidden="true">
-      <a href="#about" role="menuitem">About</a>
-      <a href="#skills" role="menuitem">Skills</a>
-    </div>
-  </header>
+    <button class="icon-btn" id="btnEmail" aria-label="Send email">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9"/><path d="M21 7.5L12 13 3 7.5"/></svg>
+    </button>
 
-  <main class="card-wrap">
-    <section class="card" aria-labelledby="profileName">
-      <div class="profile">
+    <button class="icon-btn" id="btnWhats" aria-label="Open WhatsApp chat">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5a8.5 8.5 0 1 1-1.6-4.9L21 21l-4.9-1.6A8.5 8.5 0 0 1 21 12.5z"/><path d="M17.5 15.5c-.2-.1-1.2-.6-1.4-.6s-.4 0-.6.6-.7.6-1 .6a5 5 0 0 1-1.8-.6c-.8-.6-1.3-1.7-1.4-1.8-.1-.2 0-.5 0-.7s-.2-.4-.5-.7c-.3-.4-.3-.7 0-.9s.6-.3.9-.3.6 0 .8.2.2.3.4.3.6-.1 1-.1c.5 0 .9.1 1.3.3.5.3.8.7 1 1.1.2.4.2.8 0 1.1-.1.2-.3.4-.5.4z"/></svg>
+    </button>
 
-        <div class="avatar-wrap">
-          <img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Profile photo of Lathesh S M">
-          <div class="badge">LS</div>
-        </div>
+    <button class="icon-btn" id="btnLinked" aria-label="Open LinkedIn (opens new tab)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2"/></svg>
+    </button>
+  </div>
 
-        <div class="profile-info">
-          <h1 id="profileName">LATHESH S M</h1>
-          <p class="subtitle">Full-Stack Developer • React • Node.js • IoT</p>
+  <!-- About / Skills panel -->
+  <section id="panel" class="panel" aria-live="polite"></section>
 
-          <div class="icons-row" role="list" aria-label="social and contact links">
-            <!-- Replace href="#" with your real links -->
-            <a class="icon-btn" href="#" role="listitem" title="GitHub" aria-label="GitHub link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 19c-4.5 1.5-4.5-2-6-2m12 4v-3.5c0-1.4-.5-2.3-1-2.8m3 6.3c0 0 2-1 2-4.5 0-2.5-1-4.5-4-4.5-1.5 0-2 1-3.5 1-1.5 0-2.5-1-4-1-2 0-3.5 1.5-3.5 4.5 0 3 2 4.5 2 4.5"/>
-              </svg>
-            </a>
+  <!-- download CTA -->
+  <div style="margin-top:6px; display:flex; flex-direction:column; align-items:center; gap:8px;">
+    <button class="download" id="downloadBtn" aria-label="Download resume">⬇ Download Resume</button>
+  </div>
+</main>
 
-            <a class="icon-btn" href="mailto:youremail@example.com" role="listitem" title="Email" aria-label="Send email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 6h16v12H4z"/><path d="M22 6l-10 7L2 6"/>
-              </svg>
-            </a>
+<!-- fixed menu (desktop) and hamburger (mobile) at top-right outside the card -->
+<div class="fixed-menu" id="fixedMenu" aria-hidden="false">
+  <button class="menu-btn" id="aboutDesktop">About</button>
+  <button class="menu-btn" id="skillsDesktop">Skills</button>
 
-            <a class="icon-btn" href="#" role="listitem" title="WhatsApp" aria-label="WhatsApp">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a4 4 0 0 1-2 3l-1 1-3-1a8 8 0 1 1 5-13" />
-                <path d="M22 2L11 13"/>
-              </svg>
-            </a>
+  <!-- hamburger (only visible on small screens) -->
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Open menu">
+    <span class="bar" aria-hidden="true"></span>
+  </button>
+</div>
 
-            <a class="icon-btn" href="#" role="listitem" title="LinkedIn" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v6h-4V8h4"/>
-                <rect x="2" y="8" width="4" height="12" rx="1"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-            </a>
-          </div>
+<!-- mobile overlay that shows icons + menu items when hamburger toggled -->
+<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true">
+  <div style="display:flex; gap:10px;">
+    <button class="icon-btn" id="mGit" aria-label="GitHub (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.16 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.2-3.37-1.2-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.5.34 1.9-1.29 2.74-1.02 2.74-1.02.55 1.38.2 2.4.10 2.65.64.7 1.02 1.59 1.02 2.68 0 3.83-2.34 4.67-4.57 4.92.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z" stroke-width="0.4"/></svg></button>
+    <button class="icon-btn" id="mEmail" aria-label="Email (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9"/><path d="M21 7.5L12 13 3 7.5"/></svg></button>
+    <button class="icon-btn" id="mWhats" aria-label="WhatsApp (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5a8.5 8.5 0 1 1-1.6-4.9L21 21l-4.9-1.6A8.5 8.5 0 0 1 21 12.5z"/><path d="M17.5 15.5c-.2-.1-1.2-.6-1.4-.6s-.4 0-.6.6-.7.6-1 .6a5 5 0 0 1-1.8-.6c-.8-.6-1.3-1.7-1.4-1.8-.1-.2 0-.5 0-.7s-.2-.4-.5-.7c-.3-.4-.3-.7 0-.9s.6-.3.9-.3.6 0 .8.2.2.3.4.3.6-.1 1-.1c.5 0 .9.1 1.3.3.5.3.8.7 1 1.1.2.4.2.8 0 1.1-.1.2-.3.4-.5.4z"/></svg></button>
+    <button class="icon-btn" id="mLinked" aria-label="LinkedIn (mobile)"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2"/></svg></button>
+  </div>
 
-          <div style="text-align:center; margin-top:6px;">
-            <!-- Replace href with your resume filepath -->
-            <a class="cta" href="resume.pdf" download>↓ Download Resume</a>
-          </div>
+  <div style="display:flex; gap:8px; margin-top:8px;">
+    <button class="menu-btn" id="mAbout">About</button>
+    <button class="menu-btn" id="mSkills">Skills</button>
+  </div>
+</div>
 
-          <footer>
-            © 2025 LATHESH S M
-          </footer>
-        </div>
-      </div>
-    </section>
-  </main>
+<!-- fixed footer copyright (outside card) -->
+<div class="page-footer" aria-hidden="false">
+  <div class="text">© <span id="year"></span> LATHESH S M</div>
+</div>
 
 <script>
-  // Mobile hamburger toggle
-  const hambtn = document.getElementById('hambtn');
-  const mobileMenu = document.getElementById('mobileMenu');
+  // CONFIG - replace these with your real details
+  const GITHUB_URL = 'https://github.com/latheshsm';
+  const EMAIL_ADDR = 'latheshsm@email.com';
+  const WHATSAPP_NUMBER = '91XXXXXXXXX';
+  const LINKEDIN_URL = 'https://www.linkedin.com/in/yourprofile';
 
-  hambtn.addEventListener('click', () => {
-    const expanded = hambtn.getAttribute('aria-expanded') === 'true';
-    hambtn.setAttribute('aria-expanded', !expanded);
-    mobileMenu.style.display = expanded ? 'none' : 'block';
-    mobileMenu.setAttribute('aria-hidden', expanded);
-  });
+  // set year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Close mobile menu when clicking outside (mobile only)
-  document.addEventListener('click', (e) => {
-    if (window.innerWidth <= 979){
-      if (!mobileMenu.contains(e.target) && !hambtn.contains(e.target)){
-        mobileMenu.style.display = 'none';
-        mobileMenu.setAttribute('aria-hidden','true');
-        hambtn.setAttribute('aria-expanded','false');
-      }
+  // utility
+  function openSafe(url){ window.open(url, '_blank', 'noopener'); }
+
+  // desktop fixed menu buttons
+  const aboutDesktop = document.getElementById('aboutDesktop');
+  const skillsDesktop = document.getElementById('skillsDesktop');
+
+  // panel where About/Skills show
+  const panel = document.getElementById('panel');
+
+  function openPanel(type){
+    // update pressed states for desktop buttons (if exist)
+    if(aboutDesktop) aboutDesktop.setAttribute('aria-pressed', type === 'about' ? 'true' : 'false');
+    if(skillsDesktop) skillsDesktop.setAttribute('aria-pressed', type === 'skills' ? 'true' : 'false');
+
+    // fill content
+    if(type === 'about'){
+      panel.innerHTML = '<h3>About</h3><div>I build delightful, accessible web apps with a focus on performance and clean architecture. I enjoy solving problems and shipping features end-to-end.</div>';
+    } else if(type === 'skills'){
+      panel.innerHTML = '<h3>Skills</h3><div class=\"skills-list\"><span class=\"skill-pill\">JavaScript</span><span class=\"skill-pill\">React</span><span class=\"skill-pill\">Node.js</span><span class=\"skill-pill\">MongoDB</span><span class=\"skill-pill\">HTML & CSS</span></div>';
+    } else {
+      panel.innerHTML = '';
     }
+
+    if(type) panel.classList.add('is-open'); else panel.classList.remove('is-open');
+  }
+
+  aboutDesktop && aboutDesktop.addEventListener('click', ()=> {
+    const cur = aboutDesktop.getAttribute('aria-pressed') === 'true';
+    openPanel(cur ? null : 'about');
+  });
+  skillsDesktop && skillsDesktop.addEventListener('click', ()=> {
+    const cur = skillsDesktop.getAttribute('aria-pressed') === 'true';
+    openPanel(cur ? null : 'skills');
   });
 
-  // Make icons toggle 'active' on click for visual feedback (useful for touch)
-  document.querySelectorAll('.icon-btn').forEach(btn=>{
-    btn.addEventListener('click', (ev)=>{
-      // briefly add active class to show color/border on tap
-      btn.classList.add('active');
-      setTimeout(()=> btn.classList.remove('active'), 600);
-    });
-    // Also allow keyboard activation
-    btn.addEventListener('keydown', (e)=>{
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        btn.click();
-      }
-    });
+  // icon buttons (desktop)
+  const btnGit = document.getElementById('btnGit');
+  const btnEmail = document.getElementById('btnEmail');
+  const btnWhats = document.getElementById('btnWhats');
+  const btnLinked = document.getElementById('btnLinked');
+
+  function createRipple(e, el){
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const rect = el.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 1.2;
+    r.style.width = r.style.height = size + 'px';
+    r.style.left = (e.clientX - rect.left - size/2) + 'px';
+    r.style.top = (e.clientY - rect.top - size/2) + 'px';
+    el.appendChild(r);
+    setTimeout(()=> r.remove(), 700);
+    el.focus();
+  }
+
+  // wire desktop icons
+  btnGit && btnGit.addEventListener('click', (e)=> { createRipple(e, btnGit); openSafe(GITHUB_URL); });
+  btnEmail && btnEmail.addEventListener('click', (e)=> { createRipple(e, btnEmail); window.location.href = `mailto:${EMAIL_ADDR}`; });
+  btnWhats && btnWhats.addEventListener('click', (e)=> { createRipple(e, btnWhats); const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? openSafe(`https://wa.me/${cleaned}`) : alert('WhatsApp not configured'); });
+  btnLinked && btnLinked.addEventListener('click', (e)=> { createRipple(e, btnLinked); openSafe(LINKEDIN_URL); });
+
+  // keyboard activation
+  document.querySelectorAll('.icon-btn, .menu-btn, .hamburger, .download').forEach(el=>{
+    el.addEventListener('keydown', (ev)=> { if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); el.click(); }});
   });
 
-  // Optional: preserve mobile menu state on resize
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 979){
-      mobileMenu.style.display = 'none';
-      mobileMenu.setAttribute('aria-hidden','true');
-      hambtn.setAttribute('aria-expanded','false');
-    }
+  // download button (placeholder)
+  document.getElementById('downloadBtn').addEventListener('click', (e)=>{
+    e.preventDefault();
+    const lines = [
+      'LATHESH S M',
+      'Full-Stack Developer',
+      '',
+      'Email: ' + (EMAIL_ADDR || 'email@example.com'),
+      'Phone: ' + (WHATSAPP_NUMBER || '+91-9XXXXXXXXX'),
+      '',
+      'Skills: JavaScript, React, Node.js, MongoDB, HTML, CSS'
+    ];
+    const blob = new Blob([lines.join('\n')], {type: 'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'Lathesh_SM_Resume.txt'; document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
   });
+
+  // mobile hamburger behavior
+  const hamburger = document.getElementById('hamburger');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  let overlayOpen = false;
+
+  hamburger && hamburger.addEventListener('click', (e)=>{
+    overlayOpen = !overlayOpen;
+    hamburger.setAttribute('aria-expanded', overlayOpen ? 'true' : 'false');
+    mobileOverlay.classList.toggle('open', overlayOpen);
+  });
+
+  // wire mobile overlay buttons (same actions)
+  document.getElementById('mGit').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); openSafe(GITHUB_URL); });
+  document.getElementById('mEmail').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); window.location.href = `mailto:${EMAIL_ADDR}`; });
+  document.getElementById('mWhats').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? openSafe(`https://wa.me/${cleaned}`) : alert('WhatsApp not configured'); });
+  document.getElementById('mLinked').addEventListener('click', (e)=> { createRipple(e, e.currentTarget); openSafe(LINKEDIN_URL); });
+
+  document.getElementById('mAbout').addEventListener('click', ()=> { openPanel('about'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
+  document.getElementById('mSkills').addEventListener('click', ()=> { openPanel('skills'); overlayOpen = false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
+
+  // small UX: click photo to open about (desktop/mobile)
+  document.querySelector('.frame').addEventListener('click', ()=> {
+    if(panel.classList.contains('is-open')) { openPanel(null); return; }
+    openPanel('about');
+  });
+
+  // entrance animation
+  window.addEventListener('load', ()=> { document.getElementById('stage').classList.add('visible'); });
+
 </script>
 </body>
-        </html>
+                                                                                                                                                                </html>
