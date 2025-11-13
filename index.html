@@ -12,11 +12,21 @@
     --fg:#e8f1ff; --muted:#9fb0d0; --card-bg: rgba(255,255,255,0.02);
 
     /* brand colors */
-    --gh:#ffffff;   /* GitHub on dark */
+    --gh:#ffffff;   /* GitHub */
     --gm:#D44638;   /* Gmail */
     --wa:#25D366;   /* WhatsApp */
     --li:#0077B5;   /* LinkedIn */
+
+    /* border colors */
+    --border-card: linear-gradient(90deg, rgba(100,211,255,0.32), rgba(181,107,255,0.28));
+    --border-panel: rgba(181,107,255,0.22);
+    --border-pill: rgba(100,211,255,0.12);
+    --border-icon: rgba(100,211,255,0.12);
+    --border-overlay: rgba(181,107,255,0.16);
+    --border-hamburger: rgba(100,211,255,0.12);
+    --border-topmenu: rgba(100,211,255,0.12);
   }
+
   *{box-sizing:border-box}
   html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:var(--fg);-webkit-font-smoothing:antialiased}
   body{
@@ -28,7 +38,7 @@
     display:flex;align-items:center;justify-content:center;padding:28px;overflow-x:hidden;
   }
 
-  /* decorative plate behind card */
+  /* decorative plate */
   .plate{
     position:absolute;
     width:820px; max-width:95vw;
@@ -48,13 +58,12 @@
     border:2px solid transparent;
     box-shadow: 0 30px 80px rgba(2,6,23,0.6);
     display:flex;flex-direction:column;align-items:center; gap:18px;
-    /* visible gradient border using pseudo-element (see CSS below) */
   }
 
-  /* Gradient border via pseudo-element */
+  /* gradient visible border around stage (colorful) */
   .stage::before{
     content:''; position:absolute; inset:-2px; border-radius:20px; z-index:-1;
-    background: linear-gradient(90deg, rgba(100,211,255,0.25), rgba(181,107,255,0.20));
+    background: var(--border-card);
     filter: blur(6px); opacity:0.95;
   }
   .stage::after{
@@ -63,21 +72,22 @@
     pointer-events:none;
   }
 
-  /* fixed menu container (moved outside box, top-right) */
+  /* fixed menu outside card (top-right) */
   .fixed-menu{
     position:fixed; top:18px; right:18px; display:flex; gap:10px; align-items:center; z-index:60;
   }
   .menu-btn{
-    background:transparent;border:1px solid rgba(255,255,255,0.06); padding:8px 12px;border-radius:10px;color:var(--fg);cursor:pointer;
+    background:transparent;padding:8px 12px;border-radius:10px;color:var(--fg);cursor:pointer;
     font-weight:700; font-family:Poppins; transition:transform .18s, box-shadow .18s, background .18s;
+    border:2px solid var(--border-topmenu); /* colored border for top menu */
   }
   .menu-btn:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(2,6,23,0.45); background: linear-gradient(90deg,var(--accent1), rgba(181,107,255,0.06));}
   .menu-btn[aria-pressed="true"]{background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#061022; box-shadow:0 20px 48px rgba(100,211,255,0.12);}
 
-  /* hamburger for small screens */
+  /* hamburger */
   .hamburger{
-    display:none; width:46px;height:46px;border-radius:10px;border:1px solid rgba(255,255,255,0.06); background:rgba(255,255,255,0.01);
-    align-items:center; justify-content:center; cursor:pointer;
+    display:none; width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,0.01);
+    align-items:center; justify-content:center; cursor:pointer; border:2px solid var(--border-hamburger);
   }
   .hamburger .bar{ width:20px; height:2px; background:var(--fg); display:block; position:relative }
   .hamburger .bar::before, .hamburger .bar::after{ content:''; position:absolute; left:0; right:0; height:2px; background:var(--fg); }
@@ -87,6 +97,7 @@
   .portrait{ position:relative; width:220px; height:220px; border-radius:34px; display:grid; place-items:center; overflow:visible; }
   .ring{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:240px; height:240px; border-radius:20px;
          filter:blur(22px); opacity:0.55; background: conic-gradient(from 0deg, var(--accent1), var(--accent2), var(--accent3)); mix-blend-mode:screen;}
+  /* keep profile photo border unchanged (user requested) */
   .frame{ width:200px; height:200px; border-radius:28px; overflow:hidden; border:2px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); }
   .frame img{ width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.02); transition:transform .85s cubic-bezier(.2,.9,.2,1);
               animation: hueCycle 5s linear infinite; will-change: filter; }
@@ -100,21 +111,24 @@
   .name{ font-family:Poppins; font-weight:800; font-size:26px; letter-spacing:0.2px; text-align:center }
   .sub{ color:var(--muted); font-weight:600; text-align:center; margin-top:6px }
 
-  /* action icons (visible on all sizes - stay under photo) */
+  /* actions - icons remain under photo on all sizes; icon buttons get colored borders */
   .actions{ display:flex; gap:14px; margin-top:6px; justify-content:center; }
-  .icon-btn{ display:inline-grid; place-items:center; width:56px; height:56px; border-radius:12px; background: rgba(255,255,255,0.02);
-             border:1px solid rgba(255,255,255,0.04); cursor:pointer; transition:transform .18s, box-shadow .18s; position:relative; overflow:hidden; color:var(--fg); }
+  .icon-btn{
+    display:inline-grid; place-items:center; width:56px; height:56px; border-radius:12px; background: rgba(255,255,255,0.02);
+    cursor:pointer; transition:transform .18s, box-shadow .18s; position:relative; overflow:hidden; color:var(--fg);
+    border:2px solid var(--border-icon); /* colored border for icons */
+  }
   .icon-btn:hover{ transform:translateY(-6px); box-shadow:0 22px 44px rgba(2,6,23,0.5) }
   .icon{ width:22px; height:22px; display:block; color:currentColor }
   .icon-btn:focus{ outline:3px solid rgba(100,211,255,0.14) }
 
-  /* brand color classes (use currentColor for SVG stroke) */
+  /* brand color classes */
   .gh { color:var(--gh); }   /* GitHub */
   .gm { color:var(--gm); }   /* Gmail */
   .wa { color:var(--wa); }   /* WhatsApp */
   .li { color:var(--li); }   /* LinkedIn */
 
-  /* hover fills (brand) + icon becomes appropriate contrast */
+  /* icon hover fills */
   .icon-btn.gh:hover{ color:#061022; background: linear-gradient(90deg,#f7fbff, #d9f7ff); }
   .icon-btn.gm:hover{ color:#fff; background: linear-gradient(90deg, #ffd0cc, var(--gm)); }
   .icon-btn.wa:hover{ color:#fff; background: linear-gradient(90deg, #c6fbd8, var(--wa)); }
@@ -123,92 +137,60 @@
   .ripple{ position:absolute; border-radius:50%; transform:scale(0); animation:ripple .6s linear; opacity:0.35; background: linear-gradient(90deg,var(--accent1),var(--accent2)); pointer-events:none; }
   @keyframes ripple{ to{ transform:scale(8); opacity:0 } }
 
-  /* panel: visible colorful border + rounded corners and slight tint */
+  /* panel: colored border + rounded corners */
   .panel{
     width:100%; max-width:680px; min-height:96px; border-radius:14px; padding:16px;
     background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.02));
-    border:2px solid rgba(181,107,255,0.22); color:var(--muted);
+    border:2px solid var(--border-panel); color:var(--muted);
     transform-origin:top center; transition: transform .28s cubic-bezier(.2,.9,.2,1), opacity .22s; opacity:0; transform:translateY(-8px) scale(.995); display:none;
     box-shadow: 0 12px 36px rgba(0,0,0,0.45);
   }
   .panel.is-open{ display:block; opacity:1; transform:translateY(0) scale(1); }
   .panel h3{ margin:0 0 8px 0; color:var(--fg); font-family:Poppins; font-weight:700 }
   .skills-list{ display:flex; gap:10px; flex-wrap:wrap }
-  .skill-pill{ padding:8px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); font-weight:700; color:var(--fg) }
+  .skill-pill{
+    padding:8px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:2px solid var(--border-pill); font-weight:700; color:var(--fg); /* colored border for skill pills */
+  }
 
-  /* download CTA */
-  .download{ display:inline-flex; align-items:center; gap:10px; padding:10px 16px; border-radius:12px; background:linear-gradient(90deg,var(--accent1),var(--accent2));
-             color:#061022; font-weight:800; border:none; cursor:pointer; font-family:Poppins; transition:transform .14s, box-shadow .14s; }
+  /* Download resume button - do not change its border (kept as originally styled) */
+  .download{
+    display:inline-flex; align-items:center; gap:10px; padding:10px 16px; border-radius:12px;
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:#061022; font-weight:800; border:none; cursor:pointer; font-family:Poppins; transition:transform .14s, box-shadow .14s;
+  }
   .download:hover{ transform:translateY(-6px); box-shadow:0 28px 60px rgba(100,211,255,0.12) }
 
   /* entrance */
   .stage{ opacity:0; transform:translateY(8px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1) }
   .stage.visible{ opacity:1; transform:none }
 
-  /* mobile overlay for hamburger: only show About & Skills (no icons) */
+  /* mobile overlay - colored border */
   .mobile-overlay{
-    position:fixed; right:14px; top:72px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.06);
+    position:fixed; right:14px; top:72px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     padding:12px; border-radius:12px; box-shadow:0 16px 40px rgba(2,6,23,0.6); display:none; z-index:80;
+    border:2px solid var(--border-overlay); /* colored border for overlay */
   }
   .mobile-overlay.open{ display:flex; flex-direction:column; gap:10px; align-items:center }
 
-  /* fixed footer copyright (outside card) */
+  /* footer */
   .page-footer{ position:fixed; left:0; right:0; bottom:12px; display:flex; align-items:center; justify-content:center; pointer-events:none }
   .page-footer .text{ color:var(--muted); font-size:13px; pointer-events:auto; padding:6px 10px; border-radius:8px; background:rgba(0,0,0,0.12) }
 
-  /* barcode area (separate and lower on page; not attached to card) */
-  .barcode-wrap{
-    width:100%; max-width:760px; margin:36px auto 14px; display:flex; flex-direction:column; align-items:center; gap:8px; z-index:5;
-    pointer-events:auto;
-  }
-  .barcode{
-    width:320px; max-width:92vw; height:86px; border-radius:8px; display:flex; align-items:center; justify-content:center;
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-    border:1px solid rgba(255,255,255,0.04); position:relative; overflow:hidden;
-    box-shadow: 0 18px 40px rgba(2,6,23,0.45);
-  }
-  /* stylized bars container */
-  .barcode .bars{ display:flex; align-items:flex-end; height:86px; gap:2px; padding:6px 8px; z-index:2; width:100%; box-sizing:border-box }
-  .barcode .bars .bar{ width:6px; background:#071022; display:inline-block; border-radius:2px; opacity:0.95; transform-origin:bottom center; }
-  /* scanning highlight - moving gradient */
-  .barcode::before{
-    content:''; position:absolute; left:-40%; top:0; width:40%; height:100%; z-index:3;
-    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.12), rgba(255,255,255,0.02));
-    transform: skewX(-15deg);
-    animation: scan 2.4s linear infinite;
-    pointer-events:none;
-    mix-blend-mode:screen;
-  }
-  @keyframes scan{ 0%{ left:-40% } 100%{ left:140% } }
-
-  /* bars pulse to give life */
-  .barcode .bars .bar { animation: pulse 1.6s ease-in-out infinite; }
-  .barcode .bars .bar:nth-child(odd){ animation-duration:1.4s }
-  .barcode .bars .bar:nth-child(3n){ animation-duration:1.9s }
-  @keyframes pulse{ 0%,100%{ transform: scaleY(0.9) } 50%{ transform: scaleY(1) } }
-
-  /* pause animation on hover/tap so barcode can be scanned */
-  .barcode:hover::before, .barcode:active::before { animation-play-state:paused; }
-  .barcode:hover .bars .bar, .barcode:active .bars .bar { animation-play-state:paused; }
-
-  .barcode-text{ color:var(--muted); font-weight:700; font-family:Poppins; font-size:13px; letter-spacing:1px }
-
-  /* responsive adjustments */
+  /* responsive */
   @media (max-width:720px){
     .stage{ width:92vw; padding:22px; gap:14px }
-    /* icons remain visible on all sizes (user requested) */
     .fixed-menu{ gap:8px }
-    .fixed-menu .menu-btn{ display:none } /* hide desktop menu buttons, show hamburger instead */
+    .fixed-menu .menu-btn{ display:none } /* hide desktop menu buttons on mobile */
     .hamburger{ display:flex }
     .mobile-overlay .menu-btn{ display:inline-flex }
     .mobile-overlay{ right:12px; top:64px }
-    .barcode-wrap{ margin-top:18px }
   }
 
   @media (min-width:721px){
     .hamburger{ display:none }
     .mobile-overlay{ display:none !important }
-    .fixed-menu{ display:flex }          /* show fixed menu on desktop */
+    .fixed-menu{ display:flex }
   }
 </style>
 </head>
@@ -279,23 +261,13 @@
   </div>
 </div>
 
-<!-- barcode section placed separately near bottom (not attached to card) -->
-<div class="barcode-wrap" aria-hidden="false">
-  <div class="barcode" id="barcode" role="img" aria-label="Barcode for USN 4MC24CS410">
-    <div class="bars" id="bars" aria-hidden="true">
-      <!-- bars will be created by JS to give a barcode-like pattern -->
-    </div>
-  </div>
-  <div class="barcode-text">USN: <strong>4MC24CS410</strong></div>
-</div>
-
-<!-- fixed footer copyright (outside page area) -->
+<!-- fixed footer -->
 <div class="page-footer" aria-hidden="false">
   <div class="text">© <span id="year"></span> LATHESH S M</div>
 </div>
 
 <script>
-  // CONFIG - replace these with your real details (if needed)
+  // CONFIG - replace with real details if you want
   const GITHUB_URL = 'https://github.com/latheshsm';
   const EMAIL_ADDR = 'latheshsm@email.com';
   const WHATSAPP_NUMBER = '91XXXXXXXXX';
@@ -304,12 +276,7 @@
   // set year
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Utility to open links safely
-  function openSafe(url){ window.open(url, '_blank', 'noopener'); }
-
-  /* -------------------------
-     About / Skills panel logic
-     ------------------------- */
+  // Panel logic (About/Skills inline)
   const aboutDesktop = document.getElementById('aboutDesktop');
   const skillsDesktop = document.getElementById('skillsDesktop');
   const panel = document.getElementById('panel');
@@ -337,7 +304,7 @@
     openPanel(cur ? null : 'skills');
   });
 
-  // mobile menu handlers (hamburger only shows About/Skills)
+  // mobile menu (hamburger only shows About & Skills)
   const hamburger = document.getElementById('hamburger');
   const mobileOverlay = document.getElementById('mobileOverlay');
   let overlayOpen = false;
@@ -351,9 +318,7 @@
   document.getElementById('mAbout')?.addEventListener('click', ()=> { openPanel('about'); overlayOpen=false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
   document.getElementById('mSkills')?.addEventListener('click', ()=> { openPanel('skills'); overlayOpen=false; mobileOverlay.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); });
 
-  /* -------------------------
-     Icon buttons (always under photo)
-     ------------------------- */
+  // ripple helper
   function createRipple(e, el){
     const r = document.createElement('span');
     r.className = 'ripple';
@@ -365,28 +330,27 @@
     r.style.left = (cx - rect.left - size/2) + 'px';
     r.style.top = (cy - rect.top - size/2) + 'px';
     el.appendChild(r);
-    setTimeout(()=> r.remove(),700);
+    setTimeout(()=> r.remove(), 700);
     el.focus();
   }
 
+  // icon buttons actions
   const btnGit = document.getElementById('btnGit');
   const btnEmail = document.getElementById('btnEmail');
   const btnWhats = document.getElementById('btnWhats');
   const btnLinked = document.getElementById('btnLinked');
 
-  btnGit && btnGit.addEventListener('click', (e)=> { createRipple(e, btnGit); setTimeout(()=> openSafe(GITHUB_URL), 120); });
+  btnGit && btnGit.addEventListener('click', (e)=> { createRipple(e, btnGit); setTimeout(()=> window.open(GITHUB_URL, '_blank', 'noopener'), 120); });
   btnEmail && btnEmail.addEventListener('click', (e)=> { createRipple(e, btnEmail); setTimeout(()=> window.location.href = `mailto:${EMAIL_ADDR}`, 120); });
-  btnWhats && btnWhats.addEventListener('click', (e)=> { createRipple(e, btnWhats); setTimeout(()=> { const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? openSafe(`https://wa.me/${cleaned}`) : alert('WhatsApp not configured'); }, 120); });
-  btnLinked && btnLinked.addEventListener('click', (e)=> { createRipple(e, btnLinked); setTimeout(()=> openSafe(LINKEDIN_URL), 120); });
+  btnWhats && btnWhats.addEventListener('click', (e)=> { createRipple(e, btnWhats); setTimeout(()=> { const cleaned = (WHATSAPP_NUMBER || '').replace(/\D/g,''); cleaned ? window.open(`https://wa.me/${cleaned}`, '_blank', 'noopener') : alert('WhatsApp not configured'); }, 120); });
+  btnLinked && btnLinked.addEventListener('click', (e)=> { createRipple(e, btnLinked); setTimeout(()=> window.open(LINKEDIN_URL, '_blank', 'noopener'), 120); });
 
-  // keyboard activation
+  // keyboard activation support
   document.querySelectorAll('.icon-btn, .menu-btn, .hamburger, .download').forEach(el=>{
     el.addEventListener('keydown', (ev)=> { if(ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); el.click(); }});
   });
 
-  /* -------------------------
-     Download resume (placeholder)
-     ------------------------- */
+  // download placeholder
   document.getElementById('downloadBtn').addEventListener('click', (e)=>{
     e.preventDefault();
     const lines = [
@@ -404,7 +368,7 @@
     URL.revokeObjectURL(url);
   });
 
-  // photo click opens About as shortcut
+  // photo click opens About panel
   document.querySelector('.frame').addEventListener('click', ()=> {
     if(panel.classList.contains('is-open')) { openPanel(null); return; }
     openPanel('about');
@@ -413,47 +377,6 @@
   // entrance
   window.addEventListener('load', ()=> { document.getElementById('stage').classList.add('visible'); });
 
-  /* -------------------------
-     Barcode creation & animation (looping)
-     ------------------------- */
-  // We'll create a stylized barcode made of vertical bars to visually represent the USN.
-  // The animation (scan sweep) is CSS-driven and loops. Hovering pauses the motion for scanning.
-  (function createBarcode(){
-    const barsContainer = document.getElementById('bars');
-    if(!barsContainer) return;
-    // Pattern heuristic: create a deterministic pattern based on the characters of the USN
-    const usn = '4MC24CS410';
-    // Convert each char to a numeric seed to get bar height and width variations
-    const vals = [];
-    for(let i=0;i<usn.length;i++){
-      const c = usn.charCodeAt(i);
-      vals.push((c % 7) + 1); // numbers 1..7
-    }
-    // Build a longer pattern by repeating and mixing to get ~36 bars
-    const pattern = [];
-    for(let r=0; r<5; r++){
-      for(let v of vals){
-        pattern.push(v + (r % 3)); // some variation
-      }
-    }
-    // clamp width to container (we'll set each bar width accordingly)
-    const totalBars = pattern.length;
-    // create DOM bars
-    pattern.forEach((p, idx) => {
-      const el = document.createElement('div');
-      el.className = 'bar';
-      // base height 28px -> scale to 56..86
-      const h = 24 + (p * 8); // 32..80
-      el.style.height = `${h}px`;
-      // varied width small to large
-      const w = 4 + (p % 3); // 4..6
-      el.style.width = `${w}px`;
-      // slight delay variation for pulse
-      el.style.animationDelay = `${(idx % 6) * 0.08}s`;
-      barsContainer.appendChild(el);
-    });
-  })();
-
 </script>
 </body>
-</html>
+  </html>
